@@ -1,0 +1,30 @@
+FILES TO REPLACE ON LIVE SERVER
+================================
+
+VIEW FILES (9 files):
+---------------------
+1. resources/views/welcome.blade.php
+2. resources/views/layouts/app.blade.php
+3. resources/views/admin/dashboard.blade.php
+4. resources/views/admin/students/index.blade.php
+5. resources/views/affiliate/dashboard.blade.php
+6. resources/views/affiliate/students/index.blade.php
+7. resources/views/student/dashboard.blade.php
+8. resources/views/student/register.blade.php
+9. resources/views/auth/login.blade.php
+
+BUILD FILES (3 files):
+-----------------------
+1. public/build/manifest.json
+2. public/build/assets/app-CGvPCQN5.css
+3. public/build/assets/app-C-X0ZeQP.js
+
+TOTAL: 12 files
+
+AFTER DEPLOYMENT:
+-----------------
+Run these commands on live server:
+php artisan cache:clear
+php artisan view:clear
+php artisan config:clear
+
