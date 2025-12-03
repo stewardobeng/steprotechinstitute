@@ -2,37 +2,37 @@
     <x-slot name="title">Affiliate Agents Management</x-slot>
 
     <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center mb-6">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Affiliate Agents Management</h1>
+    <div class="flex flex-wrap justify-between gap-3 items-center mb-4 sm:mb-6">
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Affiliate Agents Management</h1>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5 mb-6">
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Agents</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['total']) }}</p>
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 mb-4 sm:mb-6">
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Agents</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['total']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Approved</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['approved']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Approved</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['approved']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Pending</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['pending']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Pending</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['pending']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Active</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['active']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Active</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['active']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 dark:from-cyan-600/20 dark:to-cyan-800/20 border border-cyan-500/30 dark:border-cyan-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Earnings</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['total_earnings'], 2) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 dark:from-cyan-600/20 dark:to-cyan-800/20 border border-cyan-500/30 dark:border-cyan-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Earnings</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['total_earnings'], 2) }}</p>
         </div>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-4 sm:mt-8">
         <!-- Search and Filters -->
-        <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6 mb-6">
+        <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6 mb-4 sm:mb-6">
             <h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Search & Filter</h2>
             <form method="GET" action="{{ route('admin.affiliate-agents.index') }}" class="flex flex-col gap-4">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">

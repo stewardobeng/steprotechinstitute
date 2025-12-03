@@ -3,12 +3,12 @@
 
     <!-- PageHeading -->
     <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Classroom Management</h1>
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Classroom Management</h1>
     </div>
 
-    <div class="mt-8 grid gap-6">
+    <div class="mt-4 sm:mt-8 grid gap-4 sm:gap-6">
         <!-- Classroom ID Settings Card -->
-        <div class="flex flex-col rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-6">
+        <div class="flex flex-col rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-4 sm:p-6 overflow-hidden">
             <h2 class="text-gray-900 dark:text-white text-2xl font-bold leading-tight mb-4">Classroom ID Settings</h2>
             
             <form method="POST" action="{{ route('admin.classroom.update-id') }}" class="space-y-4">

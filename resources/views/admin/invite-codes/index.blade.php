@@ -3,12 +3,12 @@
 
     <!-- PageHeading -->
     <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Invite Codes Management</h1>
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Invite Codes Management</h1>
     </div>
 
-    <div class="mt-8 grid gap-6">
+    <div class="mt-4 sm:mt-8 grid gap-4 sm:gap-6">
         <!-- Generate New Invite Code -->
-        <div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-5">
+        <div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-4 sm:p-5 overflow-hidden">
             <div class="w-full">
                 <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Generate New Invite Code</h2>
                 <form method="POST" action="{{ route('admin.invite-codes.store') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">

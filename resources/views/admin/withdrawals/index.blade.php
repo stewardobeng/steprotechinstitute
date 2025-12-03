@@ -3,18 +3,18 @@
 
     <!-- PageHeading -->
     <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Withdrawal Requests Management</h1>
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Withdrawal Requests Management</h1>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-4 sm:mt-8">
         <!-- Withdrawals Table -->
         <div class="w-full bg-white dark:bg-[#111a22] rounded-xl border border-gray-200 dark:border-[#324d67] overflow-hidden">
-            <div class="p-5 border-b border-gray-200 dark:border-[#324d67]">
-                <h2 class="text-lg font-bold text-gray-900 dark:text-white">All Withdrawal Requests</h2>
+            <div class="p-4 sm:p-5 border-b border-gray-200 dark:border-[#324d67]">
+                <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">All Withdrawal Requests</h2>
             </div>
             @if($withdrawals->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full text-left text-xs sm:text-sm min-w-[800px]">
                         <thead class="bg-gray-50 dark:bg-gray-800">
                             <tr>
                                 <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Agent</th>

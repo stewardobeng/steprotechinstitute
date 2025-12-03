@@ -2,20 +2,20 @@
     <x-slot name="title">Settings Management</x-slot>
 
     <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center mb-8">
+    <div class="flex flex-wrap justify-between gap-3 items-center mb-4 sm:mb-8">
         <div>
-            <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Settings Management</h1>
-            <p class="text-gray-500 dark:text-[#92adc9] text-base font-normal leading-normal mt-2">Configure system settings, APIs, and integrations</p>
+            <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Settings Management</h1>
+            <p class="text-gray-500 dark:text-[#92adc9] text-sm sm:text-base font-normal leading-normal mt-2">Configure system settings, APIs, and integrations</p>
         </div>
     </div>
 
-    <form method="POST" action="{{ route('admin.settings.update') }}" class="space-y-6">
+    <form method="POST" action="{{ route('admin.settings.update') }}" class="space-y-4 sm:space-y-6">
         @csrf
         
         @foreach(['payment', 'smtp', 'sms', 'api', 'general'] as $group)
             <div class="rounded-lg bg-white dark:bg-[#111a22] overflow-hidden border border-gray-200 dark:border-[#324d67]">
                 <!-- Settings Group Header -->
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-[#324d67] bg-gray-50 dark:bg-gray-800/50">
+                <div class="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200 dark:border-[#324d67] bg-gray-50 dark:bg-gray-800/50">
                     <div class="flex items-center gap-3">
                         <span class="material-symbols-outlined text-primary text-2xl">
                             @if($group === 'payment') credit_card

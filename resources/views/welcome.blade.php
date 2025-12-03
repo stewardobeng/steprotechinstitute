@@ -3,9 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AI Literacy Professional Certification Program | SteProTECH Institute</title>
+        @php
+            $appName = \App\Models\Setting::getValue('app_name', config('app.name', 'StepProClass'));
+        @endphp
+    <title>AI Literacy Professional Certification Program | {{ $appName }}</title>
     <meta name="description" content="Join our 5-day intensive AI Literacy Professional Certification Program. Online live sessions with recordings available. Get certified today!">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 
         <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +71,7 @@
             <div class="flex justify-between items-center h-16">
                 <div class="flex items-center">
                     <div class="text-xl sm:text-2xl font-bold text-white">
-                        StepProClass
+                        {{ $appName }}
                     </div>
                 </div>
                 <div class="hidden md:flex items-center gap-4">
@@ -447,7 +451,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
                 <div>
-                    <div class="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">StepProClass</div>
+                    <div class="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4">{{ $appName }}</div>
                     <p class="text-text-muted-dark text-xs sm:text-sm">Empowering professionals with AI literacy through comprehensive training and certification.</p>
                 </div>
                 <div>
@@ -484,7 +488,7 @@
                 </div>
             </div>
             <div class="border-t border-border-dark mt-6 sm:mt-8 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-text-muted-dark">
-                <p>&copy; {{ date('Y') }} StepProClass. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} {{ $appName }}. All rights reserved.</p>
                 </div>
         </div>
     </footer>

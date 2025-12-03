@@ -2,27 +2,27 @@
     <x-slot name="title">Students Management</x-slot>
 
     <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center mb-6">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Students Management</h1>
+    <div class="flex flex-wrap justify-between gap-3 items-center mb-4 sm:mb-6">
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Students Management</h1>
     </div>
 
     <!-- Stats Cards -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-6">
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Students</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['total']) }}</p>
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-4 sm:mb-6">
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Students</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['total']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Paid Students</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['paid']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Paid Students</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['paid']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Pending Payments</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['pending']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Pending Payments</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['pending']) }}</p>
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">WhatsApp Added</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['whatsapp_added']) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">WhatsApp Added</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['whatsapp_added']) }}</p>
         </div>
     </div>
 

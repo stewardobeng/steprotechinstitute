@@ -8,7 +8,7 @@
                         <div class="flex flex-col gap-4 lg:gap-6">
                             <div class="flex items-center gap-3">
                                 <span class="material-symbols-outlined text-primary text-3xl lg:text-4xl">login</span>
-                                <h1 class="text-xl lg:text-2xl font-bold text-slate-800 dark:text-white">{{ config('app.name', 'Portal') }}</h1>
+                                <h1 class="text-xl lg:text-2xl font-bold text-slate-800 dark:text-white">{{ \App\Models\Setting::getValue('app_name', config('app.name', 'Portal')) }}</h1>
                             </div>
                             <div class="flex flex-col gap-2 text-left">
                                 <h2 class="text-slate-900 dark:text-white text-3xl lg:text-4xl xl:text-5xl font-black leading-tight tracking-[-0.033em]">
@@ -109,7 +109,7 @@
 
             <footer class="flex items-center justify-center p-6 border-t border-slate-200 dark:border-slate-800">
                 <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-400">
-                    <p>© {{ date('Y') }} {{ config('app.name', 'Portal') }}. All Rights Reserved.</p>
+                    <p>© {{ date('Y') }} {{ \App\Models\Setting::getValue('app_name', config('app.name', 'Portal')) }}. All Rights Reserved.</p>
                     <a class="hover:text-primary" href="#">Terms of Service</a>
                     <a class="hover:text-primary" href="#">Privacy Policy</a>
                     <a class="hover:text-primary" href="#">Support</a>

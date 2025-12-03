@@ -12,45 +12,45 @@
                 </p>
             @endif
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Income</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['total_income'], 2) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Income</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['total_income'], 2) }}</p>
             @if($stats['income_change'] != 0)
                 <p class="{{ $stats['income_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['income_change'] > 0 ? '+' : '' }}{{ $stats['income_change'] }}%
                 </p>
             @endif
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Commissions Paid</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['total_commissions'], 2) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-purple-600/20 to-purple-800/20 dark:from-purple-600/20 dark:to-purple-800/20 border border-purple-500/30 dark:border-purple-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Commissions Paid</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['total_commissions'], 2) }}</p>
             @if($stats['commissions_change'] != 0)
                 <p class="{{ $stats['commissions_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['commissions_change'] > 0 ? '+' : '' }}{{ $stats['commissions_change'] }}%
                 </p>
             @endif
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-yellow-600/20 to-yellow-800/20 dark:from-yellow-600/20 dark:to-yellow-800/20 border border-yellow-500/30 dark:border-yellow-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Profit</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['profit'], 2) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-yellow-600/20 to-yellow-800/20 dark:from-yellow-600/20 dark:to-yellow-800/20 border border-yellow-500/30 dark:border-yellow-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Profit</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['profit'], 2) }}</p>
             @if($stats['profit_change'] != 0)
                 <p class="{{ $stats['profit_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['profit_change'] > 0 ? '+' : '' }}{{ $stats['profit_change'] }}%
                 </p>
             @endif
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 dark:from-cyan-600/20 dark:to-cyan-800/20 border border-cyan-500/30 dark:border-cyan-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">New Affiliate Signups</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ $stats['new_affiliate_signups'] }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 dark:from-cyan-600/20 dark:to-cyan-800/20 border border-cyan-500/30 dark:border-cyan-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">New Affiliate Signups</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ $stats['new_affiliate_signups'] }}</p>
             @if($stats['signups_change'] != 0)
                 <p class="{{ $stats['signups_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['signups_change'] > 0 ? '+' : '' }}{{ $stats['signups_change'] }}%
                 </p>
             @endif
         </div>
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Pending Payouts</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['pending_payouts'], 2) }}</p>
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-orange-600/20 to-orange-800/20 dark:from-orange-600/20 dark:to-orange-800/20 border border-orange-500/30 dark:border-orange-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Pending Payouts</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['pending_payouts'], 2) }}</p>
             @if($stats['payouts_change'] != 0)
                 <p class="{{ $stats['payouts_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['payouts_change'] > 0 ? '+' : '' }}{{ $stats['payouts_change'] }}%
@@ -64,27 +64,27 @@
         <h2 class="text-gray-900 dark:text-white text-lg sm:text-xl lg:text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Analytics & Insights</h2>
         <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
             <!-- Revenue Over Time Chart -->
-            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
-                <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Revenue Over Time</p>
-                <canvas id="revenueChart" class="max-h-80"></canvas>
+            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6 overflow-hidden">
+                <p class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">Revenue Over Time</p>
+                <canvas id="revenueChart" class="max-h-80 w-full"></canvas>
             </div>
 
             <!-- Student Registrations Chart -->
-            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
-                <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Student Registrations</p>
-                <canvas id="studentsChart" class="max-h-80"></canvas>
+            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6 overflow-hidden">
+                <p class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">Student Registrations</p>
+                <canvas id="studentsChart" class="max-h-80 w-full"></canvas>
             </div>
 
             <!-- Commissions Over Time Chart -->
-            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
-                <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Commissions Over Time</p>
-                <canvas id="commissionsChart" class="max-h-80"></canvas>
+            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6 overflow-hidden">
+                <p class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">Commissions Over Time</p>
+                <canvas id="commissionsChart" class="max-h-80 w-full"></canvas>
             </div>
 
             <!-- Payment Status Distribution -->
-            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
-                <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Payment Status Distribution</p>
-                <canvas id="paymentStatusChart" class="max-h-80"></canvas>
+            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6 overflow-hidden">
+                <p class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">Payment Status Distribution</p>
+                <canvas id="paymentStatusChart" class="max-h-80 w-full"></canvas>
             </div>
         </div>
     </div>
