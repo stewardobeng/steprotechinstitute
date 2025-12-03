@@ -25,10 +25,23 @@
             $isStudent = $user && $user->isStudent();
         @endphp
 
-        <div class="relative flex h-auto min-h-screen w-full flex-col">
+        <div class="relative flex h-auto min-h-screen w-full flex-col" x-data="{ sidebarOpen: false }">
             <div class="flex h-full w-full">
+                <!-- Mobile Overlay -->
+                <div x-show="sidebarOpen" 
+                     @click="sidebarOpen = false"
+                     x-transition:enter="transition-opacity ease-linear duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition-opacity ease-linear duration-300"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+                     class="fixed inset-0 bg-gray-600 bg-opacity-75 z-30 lg:hidden"
+                     style="display: none;"></div>
+                
                 <!-- SideNavBar -->
-                <aside class="fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto">
+                <aside :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}"
+                       class="fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0">
                     <div class="flex flex-col gap-4">
                         <!-- App Name Header -->
                         <div class="flex items-center gap-3 py-3 border-b {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }}">
@@ -36,65 +49,65 @@
                         </div>
 
                         <!-- Navigation -->
-                        <nav class="flex flex-col gap-2 mt-4">
+                        <nav class="flex flex-col gap-2 mt-4" @click.away="if (window.innerWidth < 1024) sidebarOpen = false">
                             @if($isAdmin)
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.dashboard') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.dashboard') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">dashboard</span>
                                     <p class="text-sm font-medium leading-normal">Dashboard</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.affiliate-agents.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.affiliate-agents.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.affiliate-agents.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.affiliate-agents.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">group</span>
                                     <p class="text-sm font-medium leading-normal">Affiliates</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.students.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.students.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.students.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.students.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">school</span>
                                     <p class="text-sm font-medium leading-normal">Students</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.invite-codes.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.invite-codes.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.invite-codes.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.invite-codes.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">key</span>
                                     <p class="text-sm font-medium leading-normal">Invite Codes</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.withdrawals.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.withdrawals.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.withdrawals.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.withdrawals.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">credit_card</span>
                                     <p class="text-sm font-medium leading-normal">Payments</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.classroom.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.classroom.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.classroom.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.classroom.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined">class</span>
                                     <p class="text-sm font-medium leading-normal">Classroom</p>
                                 </a>
                             @elseif($isAffiliate)
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.dashboard') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.dashboard') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('affiliate.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">dashboard</span>
                                     <p class="{{ request()->routeIs('affiliate.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Dashboard</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.students.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.students.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.students.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.students.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">group</span>
                                     <p class="{{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Students</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.withdrawals.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.withdrawals.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.withdrawals.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.withdrawals.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">payments</span>
                                     <p class="{{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Withdrawals</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.analytics') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.analytics') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.analytics') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.analytics') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">analytics</span>
                                     <p class="{{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Analytics</p>
                                 </a>
                             @elseif($isStudent)
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.dashboard') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.dashboard') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('student.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">dashboard</span>
                                     <p class="{{ request()->routeIs('student.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Dashboard</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.resources.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.resources.recordings') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.resources.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.resources.recordings') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('student.resources.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">video_library</span>
                                     <p class="{{ request()->routeIs('student.resources.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Resources</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.classroom.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.classroom.index') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.classroom.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.classroom.index') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ request()->routeIs('student.classroom.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">class</span>
                                     <p class="{{ request()->routeIs('student.classroom.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Classroom</p>
                                 </a>
                             @endif
                             @if($user)
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('profile.edit') ? ($isAdmin ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'bg-primary/10 dark:bg-[#233648]') : ($isAdmin ? 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800') }}" href="{{ route('profile.edit') }}">
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('profile.edit') ? ($isAdmin ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'bg-primary/10 dark:bg-[#233648]') : ($isAdmin ? 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800') }}" href="{{ route('profile.edit') }}" @click="if (window.innerWidth < 1024) sidebarOpen = false">
                                     <span class="material-symbols-outlined {{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }}">person</span>
                                     <p class="{{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Profile</p>
                                 </a>
@@ -181,27 +194,34 @@
                     @endif
                 </aside>
 
-                <div class="flex flex-1 flex-col ml-64 min-h-screen">
+                <div class="flex flex-1 flex-col lg:ml-64 min-h-screen">
                     @if($isAdmin)
                         <!-- TopNavBar for Admin -->
-                        <header class="sticky top-0 z-30 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-border-dark px-10 py-3 bg-white dark:bg-surface-dark/30 backdrop-blur-sm">
-                            <div class="flex items-center gap-4">
-                                <h2 class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">{{ $title ?? 'Administrator Dashboard' }}</h2>
+                        <header class="sticky top-0 z-30 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-border-dark px-4 sm:px-6 lg:px-10 py-3 bg-white dark:bg-surface-dark/30 backdrop-blur-sm">
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <!-- Mobile Menu Button -->
+                                <button @click="sidebarOpen = !sidebarOpen" class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                        <path :class="{'hidden': sidebarOpen, 'inline-flex': !sidebarOpen}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                        <path :class="{'hidden': !sidebarOpen, 'inline-flex': sidebarOpen}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                                <h2 class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">{{ $title ?? 'Administrator Dashboard' }}</h2>
                             </div>
-                            <div class="flex flex-1 justify-end gap-4">
-                                <label class="flex flex-col min-w-40 !h-10 max-w-64">
+                            <div class="flex flex-1 justify-end gap-2 sm:gap-4">
+                                <label class="hidden sm:flex flex-col min-w-40 !h-10 max-w-64">
                                     <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
                                         <div class="text-gray-500 dark:text-text-muted-dark flex bg-gray-100 dark:bg-surface-dark items-center justify-center pl-4 rounded-l-lg">
                                             <span class="material-symbols-outlined">search</span>
                                         </div>
-                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-surface-dark h-full placeholder:text-gray-500 dark:placeholder:text-text-muted-dark px-4 rounded-l-none pl-2 text-base font-normal leading-normal" placeholder="Search..." type="search" id="admin-search" />
+                                        <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-gray-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-gray-100 dark:bg-surface-dark h-full placeholder:text-gray-500 dark:placeholder:text-text-muted-dark px-4 rounded-l-none pl-2 text-sm sm:text-base font-normal leading-normal" placeholder="Search..." type="search" id="admin-search" />
                                     </div>
                                 </label>
                                 <div class="flex gap-2">
                                     <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition">
-                                        <span class="material-symbols-outlined text-xl">notifications</span>
+                                        <span class="material-symbols-outlined text-lg sm:text-xl">notifications</span>
                                     </button>
-                                    <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition">
+                                    <button class="hidden sm:flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition">
                                         <span class="material-symbols-outlined text-xl">help</span>
                                     </button>
                                 </div>
@@ -216,9 +236,22 @@
                 </header>
                     @endif
 
+                    <!-- Mobile Menu Button for Non-Admin -->
+                    @if(!$isAdmin)
+                        <div class="lg:hidden sticky top-0 z-20 flex items-center px-4 sm:px-6 py-3 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-[#324d67]">
+                            <button @click="sidebarOpen = !sidebarOpen" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path :class="{'hidden': sidebarOpen, 'inline-flex': !sidebarOpen}" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                    <path :class="{'hidden': !sidebarOpen, 'inline-flex': sidebarOpen}" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                            <h2 class="ml-3 text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight">{{ $title ?? 'Dashboard' }}</h2>
+                        </div>
+                    @endif
+
                     <!-- Main Content -->
-                    <main class="flex-1 {{ $isAdmin ? 'p-8' : 'p-6 lg:p-10' }} overflow-y-auto">
-                        <div class="{{ $isAdmin ? 'mx-auto max-w-7xl space-y-8' : 'w-full max-w-7xl mx-auto' }}">
+                    <main class="flex-1 {{ $isAdmin ? 'p-4 sm:p-6 lg:p-8' : 'p-4 sm:p-6 lg:p-10' }} overflow-y-auto">
+                        <div class="{{ $isAdmin ? 'mx-auto max-w-7xl space-y-6 sm:space-y-8' : 'w-full max-w-7xl mx-auto' }}">
                             @if(session('success'))
                                 <div class="mb-6 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg">
                                     {{ session('success') }}

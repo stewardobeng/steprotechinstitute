@@ -2,10 +2,10 @@
     <x-slot name="title">Administrator Dashboard</x-slot>
 
     <!-- Stats -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-        <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
-            <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Registered Students</p>
-            <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">{{ number_format($stats['total_students']) }}</p>
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
+            <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Registered Students</p>
+            <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">{{ number_format($stats['total_students']) }}</p>
             @if($stats['students_change'] != 0)
                 <p class="{{ $stats['students_change'] > 0 ? 'text-success' : 'text-danger' }} text-base font-medium leading-normal">
                     {{ $stats['students_change'] > 0 ? '+' : '' }}{{ $stats['students_change'] }}%
@@ -60,9 +60,9 @@
     </div>
 
     <!-- Charts Section -->
-    <div class="mt-6">
-        <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Analytics & Insights</h2>
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div class="mt-4 sm:mt-6">
+        <h2 class="text-gray-900 dark:text-white text-lg sm:text-xl lg:text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Analytics & Insights</h2>
+        <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
             <!-- Revenue Over Time Chart -->
             <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
                 <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Revenue Over Time</p>
@@ -94,9 +94,9 @@
         <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Invite Code Tools</h2>
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <!-- Generate New Code -->
-            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
-                <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Generate New Code</p>
-                <p class="text-gray-500 dark:text-[#92adc9] text-sm font-normal leading-normal">Set a usage limit and generate a unique invite code for new affiliates. Leave code empty for auto-generation.</p>
+            <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-4 sm:p-6">
+                <p class="text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight tracking-[-0.015em]">Generate New Code</p>
+                <p class="text-gray-500 dark:text-[#92adc9] text-xs sm:text-sm font-normal leading-normal">Set a usage limit and generate a unique invite code for new affiliates. Leave code empty for auto-generation.</p>
                 <form method="POST" action="{{ route('admin.invite-codes.store') }}" class="flex flex-col gap-4">
                     @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -179,33 +179,33 @@
 
     <!-- Pending Affiliate Registrations -->
     <div>
-        <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Pending Affiliate Registrations</h2>
+        <h2 class="text-gray-900 dark:text-white text-lg sm:text-xl lg:text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Pending Affiliate Registrations</h2>
         <div class="rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] overflow-hidden">
             @if($pendingAffiliates->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm">
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full text-left text-xs sm:text-sm min-w-[640px]">
                         <thead class="bg-gray-50 dark:bg-gray-800 text-xs uppercase">
                             <tr>
-                                <th class="px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Name</th>
-                                <th class="px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Email</th>
-                                <th class="px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Date Submitted</th>
-                                <th class="px-6 py-3 text-right text-gray-600 dark:text-gray-300" scope="col">Actions</th>
+                                <th class="px-3 sm:px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Name</th>
+                                <th class="px-3 sm:px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Email</th>
+                                <th class="px-3 sm:px-6 py-3 text-gray-600 dark:text-gray-300" scope="col">Date Submitted</th>
+                                <th class="px-3 sm:px-6 py-3 text-right text-gray-600 dark:text-gray-300" scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-[#324d67]">
                             @foreach($pendingAffiliates as $affiliate)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                    <td class="whitespace-nowrap px-6 py-4 font-medium text-gray-900 dark:text-white">{{ $affiliate->user->name }}</td>
-                                    <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ $affiliate->user->email }}</td>
-                                    <td class="px-6 py-4 text-gray-500 dark:text-gray-400">{{ $affiliate->created_at->format('Y-m-d') }}</td>
-                                    <td class="px-6 py-4 text-right space-x-2">
+                                    <td class="whitespace-nowrap px-3 sm:px-6 py-3 sm:py-4 font-medium text-gray-900 dark:text-white">{{ $affiliate->user->name }}</td>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-gray-500 dark:text-gray-400 break-all">{{ $affiliate->user->email }}</td>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-gray-500 dark:text-gray-400 whitespace-nowrap">{{ $affiliate->created_at->format('Y-m-d') }}</td>
+                                    <td class="px-3 sm:px-6 py-3 sm:py-4 text-right space-x-1 sm:space-x-2">
                                         <form method="POST" action="{{ route('admin.affiliate-agents.reject', $affiliate) }}" class="inline">
                                             @csrf
-                                            <button type="submit" class="rounded bg-red-100 dark:bg-red-900/30 px-3 py-1 text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50" onclick="return confirm('Are you sure you want to reject this registration?')">Decline</button>
+                                            <button type="submit" class="rounded bg-red-100 dark:bg-red-900/30 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50" onclick="return confirm('Are you sure you want to reject this registration?')">Decline</button>
                                         </form>
                                         <form method="POST" action="{{ route('admin.affiliate-agents.approve', $affiliate) }}" class="inline">
                                             @csrf
-                                            <button type="submit" class="rounded bg-green-100 dark:bg-green-900/30 px-3 py-1 text-sm font-medium text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50">Approve</button>
+                                            <button type="submit" class="rounded bg-green-100 dark:bg-green-900/30 px-2 sm:px-3 py-1 text-xs sm:text-sm font-medium text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50">Approve</button>
                                         </form>
                                     </td>
                                 </tr>

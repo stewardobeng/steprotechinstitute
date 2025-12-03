@@ -2,9 +2,9 @@
     <x-slot name="title">Affiliate Agent Dashboard</x-slot>
 
     <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Affiliate Dashboard</h1>
-        <a href="{{ route('affiliate.withdrawals.index') }}" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
+    <div class="flex flex-col sm:flex-row flex-wrap justify-between gap-3 items-start sm:items-center">
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Affiliate Dashboard</h1>
+        <a href="{{ route('affiliate.withdrawals.index') }}" class="flex w-full sm:w-auto min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 sm:h-12 px-4 sm:px-5 bg-primary text-white text-sm sm:text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90">
             <span class="truncate">Request Withdrawal</span>
         </a>
     </div>
@@ -24,10 +24,10 @@
         </div>
 
         <!-- Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
-                <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Total Earnings</p>
-                <p class="text-gray-900 dark:text-white tracking-light text-3xl font-bold leading-tight">₵{{ number_format($stats['total_earnings'], 2) }}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-6">
+            <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-green-600/20 to-green-800/20 dark:from-green-600/20 dark:to-green-800/20 border border-green-500/30 dark:border-green-500/30">
+                <p class="text-gray-700 dark:text-white text-sm sm:text-base font-medium leading-normal">Total Earnings</p>
+                <p class="text-gray-900 dark:text-white tracking-light text-2xl sm:text-3xl font-bold leading-tight">₵{{ number_format($stats['total_earnings'], 2) }}</p>
             </div>
             <div class="flex flex-col gap-2 rounded-lg p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">
                 <p class="text-gray-700 dark:text-white text-base font-medium leading-normal">Amount Withdrawn</p>
@@ -48,9 +48,9 @@
         </div>
 
         <!-- Charts Section -->
-        <div class="mt-6">
-            <h2 class="text-gray-900 dark:text-white text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Analytics & Insights</h2>
-            <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div class="mt-4 sm:mt-6">
+            <h2 class="text-gray-900 dark:text-white text-lg sm:text-xl lg:text-[22px] font-bold leading-tight tracking-[-0.015em] mb-4">Analytics & Insights</h2>
+            <div class="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
                 <!-- Earnings Over Time Chart -->
                 <div class="flex flex-col gap-4 rounded-lg bg-white dark:bg-[#111a22] border border-gray-200 dark:border-[#324d67] p-6">
                     <p class="text-gray-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Earnings Over Time</p>
@@ -79,35 +79,35 @@
 
         <!-- Students Table -->
         <div class="w-full bg-white dark:bg-[#111a22] rounded-xl border border-gray-200 dark:border-[#324d67] overflow-hidden">
-            <div class="p-5 border-b border-gray-200 dark:border-[#324d67]">
-                <h2 class="text-lg font-bold text-gray-900 dark:text-white">My Referred Students</h2>
+            <div class="p-4 sm:p-5 border-b border-gray-200 dark:border-[#324d67]">
+                <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white">My Referred Students</h2>
             </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-left">
+            <div class="overflow-x-auto -mx-4 sm:mx-0">
+                <table class="w-full text-left min-w-[640px]">
                     <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Student Name</th>
-                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Registration Date</th>
-                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Status</th>
-                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 text-right">Commission Earned</th>
+                            <th class="px-3 sm:px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Student Name</th>
+                            <th class="px-3 sm:px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Registration Date</th>
+                            <th class="px-3 sm:px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Status</th>
+                            <th class="px-3 sm:px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 text-right">Commission Earned</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-[#324d67]">
                         @forelse($recentStudents as $student)
                             <tr>
-                                <td class="px-5 py-4 whitespace-nowrap">
-                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $student->user->name }}</p>
+                                <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                    <p class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">{{ $student->user->name }}</p>
                                 </td>
-                                <td class="px-5 py-4 whitespace-nowrap">
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $student->payment_date ? $student->payment_date->format('Y-m-d') : $student->created_at->format('Y-m-d') }}</p>
+                                <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                    <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{{ $student->payment_date ? $student->payment_date->format('Y-m-d') : $student->created_at->format('Y-m-d') }}</p>
                                 </td>
-                                <td class="px-5 py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : 'bg-orange-100 dark:bg-orange-900/30 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' }}">
+                                <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                    <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : 'bg-orange-100 dark:bg-orange-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' }}">
                                         {{ $student->payment_status === 'paid' ? 'Paid' : 'Unpaid' }}
                                     </span>
                                 </td>
-                                <td class="px-5 py-4 whitespace-nowrap text-right">
-                                    <p class="text-sm font-medium text-gray-900 dark:text-white">₵{{ $student->payment_status === 'paid' ? '40.00' : '0.00' }}</p>
+                                <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap text-right">
+                                    <p class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">₵{{ $student->payment_status === 'paid' ? '40.00' : '0.00' }}</p>
                                 </td>
                             </tr>
                         @empty

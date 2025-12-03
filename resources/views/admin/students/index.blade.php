@@ -97,46 +97,46 @@
 
         <!-- Students List -->
         <div class="w-full bg-white dark:bg-[#111a22] rounded-xl border border-gray-200 dark:border-[#324d67] overflow-hidden">
-            <div class="p-5 border-b border-gray-200 dark:border-[#324d67] flex justify-between items-center">
-                <h2 class="text-gray-900 dark:text-white text-lg font-bold">All Students</h2>
-                <span class="text-gray-500 dark:text-[#92adc9] text-sm">Total: {{ $students->total() }} students</span>
+            <div class="p-4 sm:p-5 border-b border-gray-200 dark:border-[#324d67] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <h2 class="text-gray-900 dark:text-white text-base sm:text-lg font-bold">All Students</h2>
+                <span class="text-gray-500 dark:text-[#92adc9] text-xs sm:text-sm">Total: {{ $students->total() }} students</span>
             </div>
             @if($students->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
+                <div class="overflow-x-auto -mx-4 sm:mx-0">
+                    <table class="w-full text-left text-xs sm:text-sm min-w-[1000px]">
                         <thead class="bg-gray-50 dark:bg-gray-800 text-xs uppercase">
                             <tr>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Student ID</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Name</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Email</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Phone</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Affiliate Agent</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Payment Status</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">WhatsApp</th>
-                                <th class="px-5 py-3 text-gray-600 dark:text-gray-300">Registered</th>
-                                <th class="px-5 py-3 text-right text-gray-600 dark:text-gray-300">Actions</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Student ID</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Name</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Email</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Phone</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Affiliate Agent</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Payment Status</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">WhatsApp</th>
+                                <th class="px-3 sm:px-5 py-3 text-gray-600 dark:text-gray-300">Registered</th>
+                                <th class="px-3 sm:px-5 py-3 text-right text-gray-600 dark:text-gray-300">Actions</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-[#324d67]">
                             @foreach($students as $student)
                                 <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <p class="text-sm font-medium text-gray-900 dark:text-white font-mono">{{ $student->student_id }}</p>
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <p class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white font-mono break-all">{{ $student->student_id }}</p>
                                     </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $student->user->name }}</p>
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <p class="text-xs sm:text-sm font-medium text-gray-900 dark:text-white">{{ $student->user->name }}</p>
                                     </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <p class="text-sm text-gray-500 dark:text-[#92adc9]">{{ $student->user->email }}</p>
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <p class="text-xs sm:text-sm text-gray-500 dark:text-[#92adc9] break-all">{{ $student->user->email }}</p>
                                     </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <p class="text-sm text-gray-500 dark:text-[#92adc9]">{{ $student->user->phone ?? 'N/A' }}</p>
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <p class="text-xs sm:text-sm text-gray-500 dark:text-[#92adc9]">{{ $student->user->phone ?? 'N/A' }}</p>
                                     </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <p class="text-sm text-gray-500 dark:text-[#92adc9]">{{ $student->affiliateAgent->user->name ?? 'N/A' }}</p>
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <p class="text-xs sm:text-sm text-gray-500 dark:text-[#92adc9]">{{ $student->affiliateAgent->user->name ?? 'N/A' }}</p>
                                     </td>
-                                    <td class="px-5 py-4 whitespace-nowrap">
-                                        <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : ($student->payment_status === 'pending' ? 'bg-orange-100 dark:bg-orange-900/30 px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' : 'bg-red-100 dark:bg-red-900/30 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:text-red-400') }}">
+                                    <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
+                                        <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : ($student->payment_status === 'pending' ? 'bg-orange-100 dark:bg-orange-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' : 'bg-red-100 dark:bg-red-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-red-800 dark:text-red-400') }}">
                                             {{ strtoupper($student->payment_status) }}
                                         </span>
                                     </td>

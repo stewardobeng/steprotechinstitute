@@ -3,19 +3,19 @@
 
     <!-- PageHeading -->
     <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Student Dashboard</h1>
+        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Student Dashboard</h1>
     </div>
 
     <div class="mt-8 grid gap-6">
         <!-- Student Information Card -->
-        <div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-5">
+        <div class="flex flex-1 flex-col items-start justify-between gap-4 rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-4 sm:p-5">
             <div class="flex flex-col gap-4 w-full">
                 <div>
-                    <p class="text-gray-500 dark:text-[#92adc9] text-sm font-normal leading-normal">Student ID</p>
+                    <p class="text-gray-500 dark:text-[#92adc9] text-xs sm:text-sm font-normal leading-normal">Student ID</p>
                     @if($registration->payment_status === 'paid')
-                        <p class="text-gray-900 dark:text-white text-2xl font-bold leading-tight mt-1 font-mono">{{ $registration->student_id }}</p>
+                        <p class="text-gray-900 dark:text-white text-xl sm:text-2xl font-bold leading-tight mt-1 font-mono break-all">{{ $registration->student_id }}</p>
                     @else
-                        <p class="text-gray-900 dark:text-white text-2xl font-bold leading-tight mt-1 font-mono blur-sm select-none" title="Complete payment to view your Student ID">{{ $registration->student_id }}</p>
+                        <p class="text-gray-900 dark:text-white text-xl sm:text-2xl font-bold leading-tight mt-1 font-mono blur-sm select-none break-all" title="Complete payment to view your Student ID">{{ $registration->student_id }}</p>
                         <p class="text-gray-500 dark:text-[#92adc9] text-xs font-normal leading-normal mt-1">Complete payment to view your Student ID</p>
                     @endif
                 </div>

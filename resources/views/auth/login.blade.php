@@ -4,17 +4,17 @@
             <div class="flex flex-1 items-center justify-center py-5">
                 <main class="flex w-full max-w-6xl flex-1 flex-col items-center justify-center lg:flex-row">
                     <!-- Left Column: Branding & Welcome Message -->
-                    <div class="hidden lg:flex lg:w-1/2 flex-col gap-8 p-12 justify-center">
-                        <div class="flex flex-col gap-6">
+                    <div class="hidden lg:flex lg:w-1/2 flex-col gap-6 lg:gap-8 p-8 lg:p-12 justify-center">
+                        <div class="flex flex-col gap-4 lg:gap-6">
                             <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-primary text-4xl">login</span>
-                                <h1 class="text-2xl font-bold text-slate-800 dark:text-white">{{ config('app.name', 'Portal') }}</h1>
+                                <span class="material-symbols-outlined text-primary text-3xl lg:text-4xl">login</span>
+                                <h1 class="text-xl lg:text-2xl font-bold text-slate-800 dark:text-white">{{ config('app.name', 'Portal') }}</h1>
                             </div>
                             <div class="flex flex-col gap-2 text-left">
-                                <h2 class="text-slate-900 dark:text-white text-5xl font-black leading-tight tracking-[-0.033em]">
+                                <h2 class="text-slate-900 dark:text-white text-3xl lg:text-4xl xl:text-5xl font-black leading-tight tracking-[-0.033em]">
                                     Welcome Back!
                                 </h2>
-                                <p class="text-slate-600 dark:text-[#92adc9] text-base font-normal leading-normal">
+                                <p class="text-slate-600 dark:text-[#92adc9] text-sm lg:text-base font-normal leading-normal">
                                     Sign in to access your dashboard and manage your account.
                                 </p>
                             </div>
@@ -23,12 +23,12 @@
                     </div>
 
                     <!-- Right Column: Login Form -->
-                    <div class="flex w-full max-w-md flex-col items-center justify-center gap-6 p-6 lg:w-1/2 lg:max-w-none lg:p-12">
+                    <div class="flex w-full max-w-md flex-col items-center justify-center gap-4 sm:gap-6 p-4 sm:p-6 lg:w-1/2 lg:max-w-none lg:p-8 xl:p-12">
                         <div class="w-full max-w-[480px]">
-                            <div class="flex flex-wrap justify-between gap-3 pb-4">
+                            <div class="flex flex-wrap justify-between gap-3 pb-3 sm:pb-4">
                                 <div class="flex flex-col gap-2">
-                                    <p class="text-slate-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Login</p>
-                                    <p class="text-slate-600 dark:text-[#92adc9] text-base font-normal leading-normal">Enter your credentials to access your dashboard.</p>
+                                    <p class="text-slate-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Login</p>
+                                    <p class="text-slate-600 dark:text-[#92adc9] text-sm sm:text-base font-normal leading-normal">Enter your credentials to access your dashboard.</p>
                                 </div>
                             </div>
 
