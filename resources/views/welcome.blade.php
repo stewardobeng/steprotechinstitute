@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html class="dark" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Literacy Professional Certification Program | SteProTECH Institute</title>
+    <meta name="description" content="Join our 5-day intensive AI Literacy Professional Certification Program. Online live sessions with recordings available. Get certified today!">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Scripts -->
+            @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
+            <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+        .faq-item.active .faq-content {
+            max-height: 1000px;
+            opacity: 1 !important;
+        }
+        
+        .testimonial-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+            </style>
+    </head>
+<body class="bg-background-dark font-display">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-surface-dark/30 backdrop-blur-sm border-b border-border-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="text-2xl font-bold text-white">
+                        StepProClass
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#about" class="text-white/80 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5">About</a>
+                    <a href="#curriculum" class="text-white/80 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5">Curriculum</a>
+                    <a href="#testimonials" class="text-white/80 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5">Testimonials</a>
+                    <a href="#faq" class="text-white/80 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5">FAQ</a>
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="text-white/80 hover:text-white transition px-3 py-2 rounded-lg hover:bg-white/5">Login</a>
+                        <a href="{{ route('register') }}" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition">Register Now</a>
+                    @endauth
+                </div>
+            </div>
+        </div>
+                </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-purple-900/20 pointer-events-none"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 lg:py-32">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="animate-fadeInUp">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-full mb-8 backdrop-blur-sm">
+                        <span class="flex h-2 w-2 rounded-full bg-purple-400"></span>
+                        <span class="text-purple-200 font-medium text-sm tracking-wide">Professional Certification Program</span>
+                    </div>
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-8 text-white leading-[1.1] tracking-tight">
+                        Master AI Literacy in <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Just 5 Days</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl">
+                        Join our intensive, hands-on training program designed for professionals. Gain practical skills, attend live sessions, and earn a recognized certification to future-proof your career.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-5 mb-12">
+                        <a href="{{ route('register') }}" class="group px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25 flex items-center justify-center gap-3">
+                            <span>Enroll Now</span>
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                        <a href="#curriculum" class="px-8 py-4 bg-white/5 text-white rounded-xl font-semibold text-lg border border-white/10 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2 backdrop-blur-sm">
+                            <span class="material-symbols-outlined">menu_book</span>
+                            <span>View Curriculum</span>
+                        </a>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-y-4 gap-x-8 text-sm font-medium text-gray-400">
+                        <div class="flex items-center gap-2.5">
+                            <div class="p-1.5 rounded-full bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined text-[20px]">schedule</span>
+                            </div>
+                            <span>5 Days Intensive</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <div class="p-1.5 rounded-full bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined text-[20px]">videocam</span>
+                            </div>
+                            <span>Live Online Sessions</span>
+                        </div>
+                        <div class="flex items-center gap-2.5">
+                            <div class="p-1.5 rounded-full bg-primary/10 text-primary">
+                                <span class="material-symbols-outlined text-[20px]">verified</span>
+                            </div>
+                            <span>Certified Program</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-fadeInUp hidden lg:block" style="animation-delay: 0.2s">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/30 to-blue-600/30 rounded-[2rem] blur-3xl"></div>
+                        <div class="relative bg-surface-dark/80 backdrop-blur-xl rounded-[2rem] p-10 border border-white/10 shadow-2xl">
+                            <div class="aspect-[4/3] bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-2xl flex items-center justify-center mb-8 border border-white/5 relative overflow-hidden group">
+                                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2832&auto=format&fit=crop')] bg-cover bg-center opacity-40 group-hover:scale-105 transition-transform duration-700"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-surface-dark via-transparent to-transparent"></div>
+                                <div class="text-center relative z-10">
+                                    <div class="h-20 w-20 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center mx-auto mb-4 border border-white/20 shadow-xl animate-float">
+                                        <span class="text-4xl">🤖</span>
+                                    </div>
+                                    <div class="text-3xl font-bold text-white tracking-tight">AI Literacy</div>
+                                    <div class="text-purple-300 font-medium mt-1">Certification</div>
+                                </div>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                                    <div class="h-10 w-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                        <span class="material-symbols-outlined">school</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-semibold">Industry Recognized</div>
+                                        <div class="text-xs text-gray-400">Boost your professional profile</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                                    <div class="h-10 w-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <span class="material-symbols-outlined">groups</span>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-semibold">Expert Led Training</div>
+                                        <div class="text-xs text-gray-400">Learn from seasoned professionals</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="about" class="py-24 bg-background-dark relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <h2 class="text-white text-3xl sm:text-4xl font-bold mb-6 tracking-tight">Why Choose Our Program?</h2>
+                <p class="text-text-muted-dark text-lg leading-relaxed">We provide a comprehensive learning experience that combines theory with practical application, ensuring you're ready for the AI-driven future.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature Cards with refined styling -->
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-purple-500/30 hover:bg-purple-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">school</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">school</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Professional Certification</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Earn a recognized AI Literacy Professional certificate upon completion to validate your expertise.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">videocam</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">videocam</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Live Online Sessions</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Interactive live sessions with expert instructors, real-time Q&A, and collaborative learning.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-green-500/30 hover:bg-green-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">video_library</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">video_library</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Lifetime Recordings</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Never miss a beat with lifetime access to all session recordings and learning materials.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-yellow-500/30 hover:bg-yellow-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">bolt</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-yellow-500/10 flex items-center justify-center text-yellow-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">bolt</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">5-Day Intensive</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Fast-track your AI knowledge with our comprehensive, structured 5-day program.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-cyan-500/30 hover:bg-cyan-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">groups</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">groups</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Expert Instructors</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Learn directly from industry experts with years of practical AI implementation experience.</p>
+                </div>
+
+                <div class="group p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-orange-500/30 hover:bg-orange-500/5 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <span class="material-symbols-outlined text-8xl">target</span>
+                    </div>
+                    <div class="h-12 w-12 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-400 mb-6 group-hover:scale-110 transition-transform duration-300">
+                        <span class="material-symbols-outlined text-2xl">target</span>
+                    </div>
+                    <h3 class="text-white text-xl font-bold mb-3">Hands-on Projects</h3>
+                    <p class="text-text-muted-dark leading-relaxed">Apply your knowledge immediately with real-world AI projects and practical case studies.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="py-24 bg-background-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <h2 class="text-white text-3xl sm:text-4xl font-bold mb-6 tracking-tight">5-Day Curriculum</h2>
+                <p class="text-text-muted-dark text-lg leading-relaxed">A structured learning path designed to take you from fundamentals to advanced application.</p>
+            </div>
+            <div class="space-y-6 max-w-5xl mx-auto">
+                @foreach([
+                    ['day' => 'Day 1', 'title' => 'Fundamentals of Artificial Intelligence', 'topics' => ['AI Fundamentals', 'Machine Learning Basics', 'AI Applications', 'Setting Up Your Environment'], 'color' => 'blue', 'icon' => 'lightbulb'],
+                    ['day' => 'Day 2', 'title' => 'Effective Use of LLM Chatbots', 'topics' => ['Neural Network Architecture', 'Deep Learning Frameworks', 'CNN & RNN', 'Hands-on Practice'], 'color' => 'purple', 'icon' => 'hub'],
+                    ['day' => 'Day 3', 'title' => 'Artificial Intelligence for Productivity', 'topics' => ['NLP Fundamentals', 'Text Processing', 'Language Models', 'Chatbot Development'], 'color' => 'green', 'icon' => 'chat'],
+                    ['day' => 'Day 4', 'title' => 'Artificial Intelligence for Content Creation', 'topics' => ['Image Recognition', 'Object Detection', 'Image Generation', 'Practical Projects'], 'color' => 'cyan', 'icon' => 'image'],
+                    ['day' => 'Day 5', 'title' => 'Artificial Intelligence for Coding', 'topics' => ['AI Ethics & Bias', 'Model Deployment', 'Production Best Practices', 'Final Assessment & Certification'], 'color' => 'yellow', 'icon' => 'verified']
+                ] as $index => $day)
+                <div class="group flex flex-col md:flex-row gap-8 p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-{{ $day['color'] }}-500/30 transition-all duration-300 relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-{{ $day['color'] }}-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
+                    <div class="flex-shrink-0 flex md:flex-col items-center gap-4 md:w-32">
+                        <div class="w-16 h-16 rounded-2xl bg-{{ $day['color'] }}-500/10 flex items-center justify-center text-{{ $day['color'] }}-400 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-symbols-outlined text-3xl">{{ $day['icon'] }}</span>
+                        </div>
+                        <div class="text-{{ $day['color'] }}-400 font-bold text-lg tracking-wide">{{ $day['day'] }}</div>
+                    </div>
+                    
+                    <div class="flex-1">
+                        <h3 class="text-white text-2xl font-bold mb-6 group-hover:text-{{ $day['color'] }}-400 transition-colors">{{ $day['title'] }}</h3>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            @foreach($day['topics'] as $topic)
+                            <div class="flex items-center gap-3 text-text-muted-dark group-hover:text-white transition-colors">
+                                <span class="material-symbols-outlined text-{{ $day['color'] }}-400/70 text-xl">check_circle</span>
+                                <span>{{ $topic }}</span>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 bg-background-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <h2 class="text-white text-3xl sm:text-4xl font-bold mb-6 tracking-tight">Success Stories</h2>
+                <p class="text-text-muted-dark text-lg leading-relaxed">Join hundreds of professionals who have transformed their careers through our program.</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                @foreach([
+                    ['name' => 'Sarah Johnson', 'role' => 'Data Scientist', 'text' => 'This program transformed my understanding of AI. The live sessions were engaging, and having access to recordings helped me review complex topics. Highly recommended!'],
+                    ['name' => 'Michael Chen', 'role' => 'Software Engineer', 'text' => 'The 5-day intensive format was perfect for my schedule. The instructors were knowledgeable, and the hands-on projects were incredibly valuable. Worth every penny!'],
+                    ['name' => 'Emily Rodriguez', 'role' => 'Business Analyst', 'text' => 'As someone new to AI, I was worried it would be too technical. But the program breaks everything down perfectly. I now feel confident discussing AI in my role.'],
+                    ['name' => 'David Kim', 'role' => 'Product Manager', 'text' => 'The certification has opened doors for me. The curriculum is comprehensive, and the lifetime access to recordings means I can always refer back. Excellent investment!'],
+                    ['name' => 'Lisa Thompson', 'role' => 'Marketing Director', 'text' => 'I loved the interactive live sessions. Being able to ask questions in real-time made all the difference. The recordings are a lifesaver for busy professionals.'],
+                    ['name' => 'James Wilson', 'role' => 'Entrepreneur', 'text' => 'This program gave me the AI literacy I needed to make informed decisions for my startup. The practical focus and expert guidance were exactly what I needed.']
+                ] as $index => $testimonial)
+                <div class="testimonial-card flex flex-col gap-6 p-8 rounded-2xl bg-surface-dark border border-white/5 hover:border-white/10 transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center gap-4">
+                        <div class="h-12 w-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 p-[2px]">
+                            <div class="h-full w-full rounded-full bg-surface-dark flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">{{ strtoupper(substr($testimonial['name'], 0, 1)) }}</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-lg">{{ $testimonial['name'] }}</h4>
+                            <p class="text-text-muted-dark text-sm">{{ $testimonial['role'] }}</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-1">
+                        @for($i = 0; $i < 5; $i++)
+                        <span class="material-symbols-outlined text-yellow-400 text-xl fill-current">star</span>
+                        @endfor
+                    </div>
+                    <p class="text-gray-400 leading-relaxed italic">"{{ $testimonial['text'] }}"</p>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-background-dark border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 max-w-3xl mx-auto">
+                <h2 class="text-white text-3xl sm:text-4xl font-bold mb-6 tracking-tight">Frequently Asked Questions</h2>
+                <p class="text-text-muted-dark text-lg leading-relaxed">Everything you need to know about our program and what to expect.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                @foreach([
+                    ['q' => 'What is the cost of the program?', 'a' => 'The AI Literacy Professional Certification Program is priced at ₵150. This includes all 5 days of intensive training, live online sessions, lifetime access to recordings, course materials, and your professional certification upon completion.'],
+                    ['q' => 'How long is the program?', 'a' => 'The program is a 5-day intensive training course. Each day consists of live online sessions with expert instructors, hands-on projects, and interactive Q&A sessions. The exact schedule will be provided upon enrollment.'],
+                    ['q' => 'Are the classes online or in-person?', 'a' => 'All classes are conducted online via live sessions. This allows you to participate from anywhere in the world. You\'ll join interactive sessions with instructors and fellow students in real-time.'],
+                    ['q' => 'What if I miss a live session?', 'a' => 'No worries! All live sessions are recorded, and you\'ll have lifetime access to these recordings. You can watch them at your convenience, pause, rewind, and review any part of the training as many times as you need.'],
+                    ['q' => 'Will I have access to recordings?', 'a' => 'Yes! You\'ll have lifetime access to all session recordings. This means you can review the material anytime, even after completing the program. The recordings are yours to keep forever.'],
+                    ['q' => 'What will I receive upon completion?', 'a' => 'Upon successful completion of the program and final assessment, you\'ll receive a Certified AI Literacy Professional certificate. This certificate demonstrates your expertise in AI fundamentals and can enhance your professional profile.'],
+                    ['q' => 'Do I need prior AI experience?', 'a' => 'No prior AI experience is required! Our program is designed for beginners and professionals alike. We start with the fundamentals and gradually build up to more advanced concepts, ensuring everyone can follow along.'],
+                    ['q' => 'What materials or software do I need?', 'a' => 'You\'ll need a computer with internet connection to join the live sessions. We\'ll provide guidance on any free software or tools needed during the program. All course materials and resources will be provided digitally.']
+                ] as $index => $faq)
+                <div class="faq-item h-fit rounded-2xl bg-surface-dark border border-white/5 hover:border-white/10 transition-all duration-300 overflow-hidden group">
+                    <button class="w-full flex justify-between items-center p-6 text-left focus:outline-none" onclick="toggleFaq({{ $index }})">
+                        <h3 class="text-white font-semibold pr-8 group-hover:text-primary transition-colors">{{ $faq['q'] }}</h3>
+                        <span class="flex-shrink-0 h-10 w-10 rounded-full bg-white/5 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary/10" id="faq-icon-wrapper-{{ $index }}">
+                            <span class="material-symbols-outlined text-2xl" id="faq-icon-{{ $index }}">add</span>
+                            </span>
+                    </button>
+                    <div class="faq-content px-6 pb-0 text-text-muted-dark leading-relaxed opacity-0 transition-all duration-300">
+                        <div class="pb-6 border-t border-white/5 pt-4">
+                            {{ $faq['a'] }}
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-24 bg-gradient-to-b from-surface-dark to-background-dark border-t border-white/5 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-blue-500/5 pointer-events-none"></div>
+        
+        <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 text-center relative z-10">
+            <h2 class="text-4xl sm:text-5xl font-bold mb-6 text-white tracking-tight">Ready to Become an AI Professional?</h2>
+            <p class="text-text-muted-dark text-xl mb-10 max-w-2xl mx-auto">Join hundreds of professionals who have transformed their careers with our AI Literacy Certification Program</p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                <a href="{{ route('register') }}" class="w-full sm:w-auto px-8 py-4 bg-primary text-white rounded-xl font-semibold text-lg hover:bg-primary/90 transition-all duration-300 shadow-lg shadow-primary/25 flex items-center justify-center gap-3 group">
+                    <span>Enroll Now - Only ₵150</span>
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-sm font-medium text-gray-400">
+                <div class="flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-green-400">check_circle</span>
+                    <span>5-Day Intensive Training</span>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-green-400">check_circle</span>
+                    <span>Live Online Sessions</span>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-green-400">check_circle</span>
+                    <span>Lifetime Recordings</span>
+                </div>
+                <div class="flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-green-400">check_circle</span>
+                    <span>Professional Certification</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-dark border-t border-border-dark py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="text-2xl font-bold text-white mb-4">StepProClass</div>
+                    <p class="text-text-muted-dark text-sm">Empowering professionals with AI literacy through comprehensive training and certification.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#about" class="text-text-muted-dark hover:text-white transition">About</a></li>
+                        <li><a href="#curriculum" class="text-text-muted-dark hover:text-white transition">Curriculum</a></li>
+                        <li><a href="#testimonials" class="text-text-muted-dark hover:text-white transition">Testimonials</a></li>
+                        <li><a href="#faq" class="text-text-muted-dark hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Program</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="{{ route('register') }}" class="text-text-muted-dark hover:text-white transition">Register</a></li>
+                        <li><a href="{{ route('login') }}" class="text-text-muted-dark hover:text-white transition">Login</a></li>
+                        @auth
+                        <li><a href="{{ url('/dashboard') }}" class="text-text-muted-dark hover:text-white transition">Dashboard</a></li>
+                        @endauth
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-sm text-text-muted-dark">
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">email</span>
+                            <span>info@steproclass.com</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">phone</span>
+                            <span>+233 XX XXX XXXX</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-border-dark mt-8 pt-8 text-center text-sm text-text-muted-dark">
+                <p>&copy; {{ date('Y') }} StepProClass. All rights reserved.</p>
+                </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        function toggleFaq(index) {
+            const item = document.querySelectorAll('.faq-item')[index];
+            const icon = document.getElementById(`faq-icon-${index}`);
+            const content = item.querySelector('.faq-content');
+            
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                icon.textContent = 'add';
+                icon.style.transform = 'rotate(0deg)';
+                content.style.opacity = '0';
+                content.style.maxHeight = '0';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-item').forEach((el, i) => {
+                    if (i !== index) {
+                        el.classList.remove('active');
+                        const otherIcon = document.getElementById(`faq-icon-${i}`);
+                        const otherContent = el.querySelector('.faq-content');
+                        if (otherIcon) {
+                            otherIcon.textContent = 'add';
+                            otherIcon.style.transform = 'rotate(0deg)';
+                        }
+                        if (otherContent) {
+                            otherContent.style.opacity = '0';
+                            otherContent.style.maxHeight = '0';
+                        }
+                    }
+                });
+                
+                item.classList.add('active');
+                icon.textContent = 'remove';
+                icon.style.transform = 'rotate(180deg)';
+                content.style.opacity = '1';
+                content.style.maxHeight = '1000px';
+            }
+        }
+
+        // Testimonial Animation on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const testimonialObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 100);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            testimonialObserver.observe(card);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+    </body>
+</html>

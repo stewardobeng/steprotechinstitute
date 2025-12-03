@@ -1,0 +1,72 @@
+<x-app-layout>
+    <x-slot name="title">My Students</x-slot>
+
+    <!-- PageHeading -->
+    <div class="flex flex-wrap justify-between gap-3 items-center">
+        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">My Students</h1>
+    </div>
+
+    <div class="mt-8">
+        <!-- Students Table -->
+        <div class="w-full bg-white dark:bg-[#111a22] rounded-xl border border-gray-200 dark:border-[#324d67] overflow-hidden">
+            <div class="p-5 border-b border-gray-200 dark:border-[#324d67]">
+                <h2 class="text-lg font-bold text-gray-900 dark:text-white">Students Who Registered and Paid</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Student ID</th>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Student Name</th>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Email</th>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Payment Date</th>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300">Registration Fee</th>
+                            <th class="px-5 py-3 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-300 text-right">Commission Earned</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-[#324d67]">
+                        @forelse($students as $student)
+                            <tr>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white font-mono">{{ $student->student_id }}</p>
+                                </td>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $student->user->name }}</p>
+                                </td>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $student->user->email }}</p>
+                                </td>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $student->payment_date ? $student->payment_date->format('Y-m-d') : 'N/A' }}</p>
+                                </td>
+                                <td class="px-5 py-4 whitespace-nowrap">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">₵{{ number_format($student->registration_fee, 2) }}</p>
+                                </td>
+                                <td class="px-5 py-4 whitespace-nowrap text-right">
+                                    <p class="text-sm font-medium text-gray-900 dark:text-white">₵40.00</p>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-5 py-4 text-center text-gray-500 dark:text-gray-400">No students have registered and paid yet. Share your referral link to start earning commissions!</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            @if($students->hasPages())
+                <div class="p-5 border-t border-gray-200 dark:border-[#324d67]">
+                    {{ $students->links() }}
+                </div>
+            @endif
+            @if($students->count() > 0)
+                <div class="p-5 border-t border-gray-200 dark:border-[#324d67] bg-gray-50 dark:bg-gray-800">
+                    <div class="flex justify-between items-center">
+                        <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Total Students:</strong> {{ $students->total() }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400"><strong>Total Commission:</strong> ₵{{ number_format($students->total() * 40, 2) }}</p>
+                    </div>
+                </div>
+            @endif
+        </div>
+    </div>
+</x-app-layout>
