@@ -169,6 +169,39 @@
                                         <input type="hidden" name="settings[1][7][type]" value="string">
                                     </div>
                                 </div>
+                                
+                                <!-- Test Mail Section -->
+                                <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg border border-gray-200 dark:border-[#324d67]">
+                                    <h3 class="text-gray-900 dark:text-white text-lg font-semibold mb-3">Test Email Configuration</h3>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Send a test email to verify your SMTP settings are working correctly.</p>
+                                    <form method="POST" action="{{ route('admin.settings.test-mail') }}" class="flex gap-3">
+                                        @csrf
+                                        <input 
+                                            type="email" 
+                                            name="test_email" 
+                                            value="{{ auth()->user()->email }}"
+                                            placeholder="test@example.com" 
+                                            required
+                                            class="flex-1 rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal"
+                                        />
+                                        <button 
+                                            type="submit" 
+                                            class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition text-sm font-medium focus:outline-none focus:ring-2 focus:ring-primary"
+                                        >
+                                            Send Test Email
+                                        </button>
+                                    </form>
+                                    @if(session('test_mail_success'))
+                                        <div class="mt-3 p-3 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-800 text-green-700 dark:text-green-400 rounded-lg text-sm">
+                                            {{ session('test_mail_success') }}
+                                        </div>
+                                    @endif
+                                    @if(session('test_mail_error'))
+                                        <div class="mt-3 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 rounded-lg text-sm">
+                                            {{ session('test_mail_error') }}
+                                        </div>
+                                    @endif
+                                </div>
                             @elseif($group === 'general')
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="flex flex-col gap-2">

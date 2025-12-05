@@ -1,0 +1,30 @@
+[1mdiff --git a/routes/web.php b/routes/web.php[m
+[1mindex 3102ef5..b841cf9 100644[m
+[1m--- a/routes/web.php[m
+[1m+++ b/routes/web.php[m
+[36m@@ -58,15 +58,20 @@[m
+ [m
+     // Affiliate Agent Routes[m
+     Route::prefix('affiliate')->name('affiliate.')->middleware('role:affiliate_agent')->group(function () {[m
+[32m+[m[32m        // Routes accessible to unapproved agents[m
+         Route::get('/pending', [AffiliateDashboardController::class, 'pending'])->name('pending');[m
+         Route::get('/dashboard', [AffiliateDashboardController::class, 'index'])->name('dashboard');[m
+         Route::get('/referral-link', [AffiliateDashboardController::class, 'index'])->name('referral-link');[m
+[31m-        Route::get('/students', [AffiliateStudentController::class, 'index'])->name('students.index');[m
+[31m-        Route::get('/analytics', [AffiliateWithdrawalController::class, 'analytics'])->name('analytics');[m
+[31m-        Route::get('/withdrawals', [AffiliateWithdrawalController::class, 'index'])->name('withdrawals.index');[m
+[31m-        Route::post('/withdrawal/request', [AffiliateWithdrawalController::class, 'request'])->name('withdrawal.request');[m
+[31m-        Route::post('/invite-codes/generate', [AffiliateInviteCodeController::class, 'generate'])->name('invite-codes.generate');[m
+         Route::delete('/account', [AffiliateDashboardController::class, 'deleteAccount'])->name('account.delete');[m
+[32m+[m[41m        [m
+[32m+[m[32m        // Routes that require approval[m
+[32m+[m[32m        Route::middleware('affiliate.approved')->group(function () {[m
+[32m+[m[32m            Route::get('/students', [AffiliateStudentController::class, 'index'])->name('students.index');[m
+[32m+[m[32m            Route::get('/analytics', [AffiliateWithdrawalController::class, 'analytics'])->name('analytics');[m
+[32m+[m[32m            Route::get('/withdrawals', [AffiliateWithdrawalController::class, 'index'])->name('withdrawals.index');[m
+[32m+[m[32m            Route::post('/withdrawal/request', [AffiliateWithdrawalController::class, 'request'])->name('withdrawal.request');[m
+[32m+[m[32m            Route::post('/invite-codes/generate', [AffiliateInviteCodeController::class, 'generate'])->name('invite-codes.generate');[m
+[32m+[m[32m        });[m
+     });[m
+ [m
+     // Admin Routes[m

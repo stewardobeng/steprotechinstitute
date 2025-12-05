@@ -58,15 +58,20 @@ Route::middleware('auth')->group(function () {
 
     // Affiliate Agent Routes
     Route::prefix('affiliate')->name('affiliate.')->middleware('role:affiliate_agent')->group(function () {
+        // Routes accessible to unapproved agents
         Route::get('/pending', [AffiliateDashboardController::class, 'pending'])->name('pending');
         Route::get('/dashboard', [AffiliateDashboardController::class, 'index'])->name('dashboard');
         Route::get('/referral-link', [AffiliateDashboardController::class, 'index'])->name('referral-link');
-        Route::get('/students', [AffiliateStudentController::class, 'index'])->name('students.index');
-        Route::get('/analytics', [AffiliateWithdrawalController::class, 'analytics'])->name('analytics');
-        Route::get('/withdrawals', [AffiliateWithdrawalController::class, 'index'])->name('withdrawals.index');
-        Route::post('/withdrawal/request', [AffiliateWithdrawalController::class, 'request'])->name('withdrawal.request');
-        Route::post('/invite-codes/generate', [AffiliateInviteCodeController::class, 'generate'])->name('invite-codes.generate');
         Route::delete('/account', [AffiliateDashboardController::class, 'deleteAccount'])->name('account.delete');
+        
+        // Routes that require approval
+        Route::middleware('affiliate.approved')->group(function () {
+            Route::get('/students', [AffiliateStudentController::class, 'index'])->name('students.index');
+            Route::get('/analytics', [AffiliateWithdrawalController::class, 'analytics'])->name('analytics');
+            Route::get('/withdrawals', [AffiliateWithdrawalController::class, 'index'])->name('withdrawals.index');
+            Route::post('/withdrawal/request', [AffiliateWithdrawalController::class, 'request'])->name('withdrawal.request');
+            Route::post('/invite-codes/generate', [AffiliateInviteCodeController::class, 'generate'])->name('invite-codes.generate');
+        });
     });
 
     // Admin Routes
@@ -107,6 +112,7 @@ Route::middleware('auth')->group(function () {
         // Settings
         Route::get('/settings', [AdminSettingsController::class, 'index'])->name('settings.index');
         Route::post('/settings/update', [AdminSettingsController::class, 'update'])->name('settings.update');
+        Route::post('/settings/test-mail', [AdminSettingsController::class, 'testMail'])->name('settings.test-mail');
         
         // Classroom
         Route::get('/classroom', [AdminClassroomController::class, 'index'])->name('classroom.index');

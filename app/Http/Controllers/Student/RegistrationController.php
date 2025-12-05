@@ -100,7 +100,7 @@ class RegistrationController extends Controller
         }
 
         try {
-            $user = \DB::transaction(function () use ($validated, $affiliateAgentId, $inviteCodeUsed) {
+            $registration = \DB::transaction(function () use ($validated, $affiliateAgentId, $inviteCodeUsed) {
                 // Create user
                 $user = \App\Models\User::create([
                     'name' => $validated['name'],
@@ -126,6 +126,9 @@ class RegistrationController extends Controller
 
                 return $registration;
             });
+
+            // Get the user from the registration
+            $user = $registration->user;
 
             // Send notification when student is registered (outside transaction)
             try {

@@ -60,7 +60,7 @@
                     const wasMobile = this.isMobile;
                     this.isMobile = window.innerWidth < 1024;
                     
-                    // If switching from mobile to desktop, open sidebar
+                    // If switching from mobile to desktop, open sidebar and restore body scroll
                     if (wasMobile && !this.isMobile) {
                         this.sidebarOpen = true;
                         document.body.style.overflow = '';
@@ -74,17 +74,19 @@
                 
                 window.addEventListener('resize', handleResize);
                 
-                // Prevent body scroll when sidebar is open on mobile
+                // Prevent body scroll when sidebar is open on mobile ONLY
                 this.$watch('sidebarOpen', (value) => {
                     // Prevent sidebar from closing on desktop
                     if (!this.isMobile && !value) {
                         this.sidebarOpen = true;
                     }
-                    // Prevent body scroll when sidebar is open on mobile
+                    // Only manipulate body scroll on mobile devices
                     if (this.isMobile) {
                         if (value) {
+                            // Prevent body scroll when sidebar is open
                             document.body.style.overflow = 'hidden';
                         } else {
+                            // Restore body scroll when sidebar is closed
                             document.body.style.overflow = '';
                         }
                     }
@@ -109,7 +111,7 @@
                     'translate-x-0': sidebarOpen || !isMobile,
                     '-translate-x-full': !sidebarOpen && isMobile
                 }"
-                       class="fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky">
+                       class="fixed lg:fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0">
                     <div class="flex flex-col gap-4">
                         <!-- App Name Header -->
                         <div class="flex items-center gap-3 py-3 border-b {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }}">
@@ -144,22 +146,28 @@
                                     <p class="text-sm font-medium leading-normal">Classroom</p>
                                 </a>
                             @elseif($isAffiliate)
+                                @php
+                                    $affiliateAgent = $user->affiliateAgent;
+                                    $isApproved = $affiliateAgent && $affiliateAgent->registration_approved;
+                                @endphp
                                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.dashboard') }}" @click="if (isMobile) { sidebarOpen = false; }">
                                     <span class="material-symbols-outlined {{ request()->routeIs('affiliate.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">dashboard</span>
                                     <p class="{{ request()->routeIs('affiliate.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Dashboard</p>
                                 </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.students.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.students.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
-                                    <span class="material-symbols-outlined {{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">group</span>
-                                    <p class="{{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Students</p>
-                                </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.withdrawals.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.withdrawals.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
-                                    <span class="material-symbols-outlined {{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">payments</span>
-                                    <p class="{{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Withdrawals</p>
-                                </a>
-                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.analytics') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.analytics') }}" @click="if (isMobile) { sidebarOpen = false; }">
-                                    <span class="material-symbols-outlined {{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">analytics</span>
-                                    <p class="{{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Analytics</p>
-                                </a>
+                                @if($isApproved)
+                                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.students.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.students.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                        <span class="material-symbols-outlined {{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">group</span>
+                                        <p class="{{ request()->routeIs('affiliate.students.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Students</p>
+                                    </a>
+                                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.withdrawals.*') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.withdrawals.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                        <span class="material-symbols-outlined {{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">payments</span>
+                                        <p class="{{ request()->routeIs('affiliate.withdrawals.*') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Withdrawals</p>
+                                    </a>
+                                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('affiliate.analytics') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('affiliate.analytics') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                        <span class="material-symbols-outlined {{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">analytics</span>
+                                        <p class="{{ request()->routeIs('affiliate.analytics') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Analytics</p>
+                                    </a>
+                                @endif
                             @elseif($isStudent)
                                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('student.dashboard') ? 'bg-primary/10 dark:bg-[#233648]' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }}" href="{{ route('student.dashboard') }}" @click="if (isMobile) { sidebarOpen = false; }">
                                     <span class="material-symbols-outlined {{ request()->routeIs('student.dashboard') ? 'text-primary dark:text-white' : 'text-gray-600 dark:text-white' }}">dashboard</span>
@@ -196,7 +204,7 @@
                             <div class="relative" x-data="{ open: false, isDark: document.documentElement.classList.contains('dark') }" x-init="setInterval(() => { isDark = document.documentElement.classList.contains('dark') }, 100)">
                                 <button 
                                     @click="open = !open"
-                                    class="flex items-center gap-3 w-full p-2 rounded-lg {{ $isAdmin ? 'hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }} transition"
+                                    class="flex items-center gap-3 w-full p-2 rounded-lg {{ $isAdmin ? 'hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }} transition min-w-0"
                                 >
                                     @if($user && $user->profile_image)
                                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style="background-image: url('{{ asset('storage/' . $user->profile_image) }}');"></div>
@@ -206,7 +214,7 @@
                                         </div>
                                     @endif
                                     @if($user)
-                                        <div class="flex flex-col flex-1 text-left">
+                                        <div class="flex flex-col flex-1 text-left min-w-0">
                                             <h1 class="{{ $isAdmin ? 'text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white' }} text-sm font-medium leading-normal truncate">{{ $user->name }}</h1>
                                             <p class="{{ $isAdmin ? 'text-gray-600 dark:text-text-muted-dark' : 'text-gray-500 dark:text-[#92adc9]' }} text-xs font-normal leading-normal truncate">{{ $user->email }}</p>
                                         </div>
