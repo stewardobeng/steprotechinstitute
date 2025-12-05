@@ -1,9 +1,7 @@
 <x-app-layout>
     <x-slot name="title">Affiliate Agent Details</x-slot>
 
-    <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]">Affiliate Agent Details</h1>
+    <div class="flex flex-wrap justify-end gap-3 items-center mb-4 sm:mb-6">
         <a href="{{ route('admin.affiliate-agents.index') }}" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-gray-600 text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-gray-700">
             <span class="truncate">Back to List</span>
         </a>

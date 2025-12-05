@@ -1,13 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Settings Management</x-slot>
 
-    <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center mb-4 sm:mb-8">
-        <div>
-            <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Settings Management</h1>
-            <p class="text-gray-500 dark:text-[#92adc9] text-sm sm:text-base font-normal leading-normal mt-2">Configure system settings, APIs, and integrations</p>
-        </div>
-    </div>
 
     <form method="POST" action="{{ route('admin.settings.update') }}" class="space-y-4 sm:space-y-6">
         @csrf

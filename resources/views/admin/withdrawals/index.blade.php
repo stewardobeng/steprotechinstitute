@@ -1,11 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Withdrawal Requests Management</x-slot>
 
-    <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Withdrawal Requests Management</h1>
-    </div>
-
     <div class="mt-4 sm:mt-8">
         <!-- Withdrawals Table -->
         <div class="w-full bg-white dark:bg-[#111a22] rounded-xl border border-gray-200 dark:border-[#324d67] overflow-hidden">

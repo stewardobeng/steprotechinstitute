@@ -1,11 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Students Management</x-slot>
 
-    <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center mb-4 sm:mb-6">
-        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Students Management</h1>
-    </div>
-
     <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-4 sm:mb-6">
         <div class="flex flex-col gap-2 rounded-lg p-4 sm:p-6 bg-gradient-to-br from-blue-600/20 to-blue-800/20 dark:from-blue-600/20 dark:to-blue-800/20 border border-blue-500/30 dark:border-blue-500/30">

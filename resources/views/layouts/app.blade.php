@@ -165,6 +165,13 @@
                                 </a>
                             @endif
                             @if($user)
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('notifications.*') ? ($isAdmin ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'bg-primary/10 dark:bg-[#233648]') : ($isAdmin ? 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800') }}" href="{{ route('notifications.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                    <span class="material-symbols-outlined {{ request()->routeIs('notifications.*') ? ($isAdmin ? 'text-primary dark:text-white' : 'text-primary dark:text-white') : ($isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white') }}">notifications</span>
+                                    <p class="{{ request()->routeIs('notifications.*') ? ($isAdmin ? 'text-primary dark:text-white' : 'text-primary dark:text-white') : ($isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white') }} text-sm font-medium leading-normal">Notifications</p>
+                                    @if(auth()->user()->unreadNotifications()->count() > 0)
+                                        <span class="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-primary text-white text-xs font-bold">{{ auth()->user()->unreadNotifications()->count() }}</span>
+                                    @endif
+                                </a>
                                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('profile.edit') ? ($isAdmin ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'bg-primary/10 dark:bg-[#233648]') : ($isAdmin ? 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800') }}" href="{{ route('profile.edit') }}" @click="if (isMobile) { sidebarOpen = false; }">
                                     <span class="material-symbols-outlined {{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }}">person</span>
                                     <p class="{{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium leading-normal">Profile</p>
@@ -175,138 +182,6 @@
 
                     @if($user)
                         <div class="mt-auto flex flex-col gap-3 pt-4 border-t {{ $isAdmin ? 'border-gray-200 dark:border-white/10' : 'border-gray-200 dark:border-[#324d67]' }}">
-                            <!-- Notifications Bell -->
-                            <div class="relative" x-data="{ 
-                                notificationsOpen: false, 
-                                unreadCount: {{ auth()->user()->unreadNotifications()->count() }},
-                                notifications: [],
-                                loading: false,
-                                init() {
-                                    this.fetchNotifications();
-                                    // Poll for new notifications every 30 seconds
-                                    setInterval(() => this.fetchUnreadCount(), 30000);
-                                },
-                                async fetchNotifications() {
-                                    this.loading = true;
-                                    try {
-                                        const response = await fetch('{{ route('notifications.index') }}?read=false');
-                                        const data = await response.json();
-                                        this.notifications = data.notifications?.data || [];
-                                        this.unreadCount = data.unread_count || 0;
-                                    } catch (error) {
-                                        console.error('Failed to fetch notifications:', error);
-                                    } finally {
-                                        this.loading = false;
-                                    }
-                                },
-                                async fetchUnreadCount() {
-                                    try {
-                                        const response = await fetch('{{ route('notifications.unread-count') }}');
-                                        const data = await response.json();
-                                        this.unreadCount = data.count || 0;
-                                    } catch (error) {
-                                        console.error('Failed to fetch unread count:', error);
-                                    }
-                                },
-                                async markAsRead(notificationId) {
-                                    try {
-                                        await fetch(`/notifications/${notificationId}/read`, {
-                                            method: 'POST',
-                                            headers: {
-                                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                'Content-Type': 'application/json',
-                                            },
-                                        });
-                                        this.fetchNotifications();
-                                    } catch (error) {
-                                        console.error('Failed to mark notification as read:', error);
-                                    }
-                                },
-                                async markAllAsRead() {
-                                    try {
-                                        await fetch('{{ route('notifications.mark-all-read') }}', {
-                                            method: 'POST',
-                                            headers: {
-                                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                                                'Content-Type': 'application/json',
-                                            },
-                                        });
-                                        this.unreadCount = 0;
-                                        this.fetchNotifications();
-                                    } catch (error) {
-                                        console.error('Failed to mark all as read:', error);
-                                    }
-                                }
-                            }">
-                                <button 
-                                    @click="notificationsOpen = !notificationsOpen; if (notificationsOpen) fetchNotifications();"
-                                    class="relative flex items-center gap-3 w-full p-2 rounded-lg {{ $isAdmin ? 'hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800' }} transition"
-                                >
-                                    <span class="material-symbols-outlined {{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }} text-xl">notifications</span>
-                                    <span class="flex-1 text-left {{ $isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white' }} text-sm font-medium">Notifications</span>
-                                    <span x-show="unreadCount > 0" class="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-primary text-white text-xs font-bold" x-text="unreadCount" style="display: none;"></span>
-                                </button>
-                                
-                                <!-- Notifications Dropdown -->
-                                <div 
-                                    x-show="notificationsOpen"
-                                    @click.away="notificationsOpen = false"
-                                    x-transition:enter="transition ease-out duration-100"
-                                    x-transition:enter-start="opacity-0 scale-95"
-                                    x-transition:enter-end="opacity-100 scale-100"
-                                    x-transition:leave="transition ease-in duration-75"
-                                    x-transition:leave-start="opacity-100 scale-100"
-                                    x-transition:leave-end="opacity-0 scale-95"
-                                    class="absolute bottom-full left-0 right-0 mb-2 {{ $isAdmin ? 'bg-white dark:bg-surface-dark' : 'bg-white dark:bg-[#111a22]' }} rounded-lg border {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }} shadow-lg overflow-hidden z-50 max-h-96 overflow-y-auto"
-                                    style="display: none;"
-                                >
-                                    <div class="flex items-center justify-between px-4 py-3 border-b {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }}">
-                                        <h3 class="{{ $isAdmin ? 'text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white' }} font-semibold text-sm">Notifications</h3>
-                                        <button 
-                                            @click="markAllAsRead()" 
-                                            x-show="unreadCount > 0"
-                                            class="text-xs text-primary hover:text-primary/80 transition"
-                                            style="display: none;"
-                                        >
-                                            Mark all read
-                                        </button>
-                                    </div>
-                                    <div x-show="loading" class="p-4 text-center text-gray-500 dark:text-gray-400 text-sm">Loading...</div>
-                                    <div x-show="!loading && notifications.length === 0" class="p-4 text-center text-gray-500 dark:text-gray-400 text-sm">No notifications</div>
-                                    <template x-for="notification in notifications" :key="notification.id">
-                                        <div 
-                                            @click="markAsRead(notification.id); if (notification.data?.action_url) window.location.href = notification.data.action_url;"
-                                            :class="notification.read ? '{{ $isAdmin ? 'bg-gray-50 dark:bg-gray-800/50' : 'bg-gray-50 dark:bg-gray-800/30' }}' : '{{ $isAdmin ? 'bg-white dark:bg-surface-dark' : 'bg-white dark:bg-[#111a22]' }}'"
-                                            class="px-4 py-3 border-b {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }} cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-                                        >
-                                            <div class="flex items-start gap-3">
-                                                <div class="flex-shrink-0 mt-0.5">
-                                                    <span class="material-symbols-outlined text-primary text-lg" x-text="
-                                                        notification.type === 'account_approved' ? 'check_circle' :
-                                                        (notification.type === 'withdrawal_requested' || notification.type === 'withdrawal_approved') ? 'payments' :
-                                                        (notification.type === 'student_added' || notification.type === 'student_referred') ? 'person_add' :
-                                                        notification.type === 'payment_completed' ? 'payment' :
-                                                        notification.type === 'commission_earned' ? 'account_balance_wallet' :
-                                                        'notifications'
-                                                    " style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;"></span>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="{{ $isAdmin ? 'text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white' }} font-semibold text-sm" x-text="notification.title"></p>
-                                                    <p class="{{ $isAdmin ? 'text-gray-600 dark:text-gray-400' : 'text-gray-600 dark:text-gray-400' }} text-xs mt-1 line-clamp-2" x-text="notification.message"></p>
-                                                    <p class="{{ $isAdmin ? 'text-gray-500 dark:text-gray-500' : 'text-gray-500 dark:text-gray-500' }} text-xs mt-1" x-text="new Date(notification.created_at).toLocaleString()"></p>
-                                                </div>
-                                                <div x-show="!notification.read" class="flex-shrink-0">
-                                                    <div class="w-2 h-2 rounded-full bg-primary"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </template>
-                                    <div x-show="!loading && notifications.length > 0" class="p-2 border-t {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }}">
-                                        <a href="{{ route('notifications.index') }}" class="block text-center text-primary hover:text-primary/80 text-sm font-medium py-2">View all notifications</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
                             <!-- User Profile Dropdown -->
                             <div class="relative" x-data="{ open: false, isDark: document.documentElement.classList.contains('dark') }" x-init="setInterval(() => { isDark = document.documentElement.classList.contains('dark') }, 100)">
                                 <button 
@@ -408,9 +283,10 @@
                                     </div>
                                 </label>
                                 <div class="flex gap-2">
-                                    <button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition">
+                                    <a href="{{ route('notifications.index') }}" class="relative flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition" x-data="{ unreadCount: {{ auth()->user()->unreadNotifications()->count() }}, init() { setInterval(() => { fetch('{{ route('notifications.unread-count') }}').then(r => r.json()).then(d => this.unreadCount = d.count || 0).catch(() => {}); }, 30000); } }">
                                         <span class="material-symbols-outlined text-lg sm:text-xl">notifications</span>
-                                    </button>
+                                        <span x-show="unreadCount > 0" class="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold" x-text="unreadCount > 99 ? '99+' : unreadCount" style="display: none;"></span>
+                                    </a>
                                     <button class="hidden sm:flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-gray-100 dark:bg-surface-dark text-gray-700 dark:text-white gap-2 text-sm font-bold leading-normal tracking-[0.015em] min-w-0 hover:bg-gray-200 dark:hover:bg-surface-dark/80 transition">
                                         <span class="material-symbols-outlined text-xl">help</span>
                                     </button>
@@ -428,14 +304,20 @@
 
                     <!-- Mobile Menu Button for Non-Admin -->
                     @if(!$isAdmin)
-                        <div class="lg:hidden sticky top-0 z-20 flex items-center px-4 sm:px-6 py-3 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-[#324d67]">
-                            <button @click.prevent="sidebarOpen = !sidebarOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary">
-                                <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path x-show="!sidebarOpen" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" style="display: none;"></path>
-                                    <path x-show="sidebarOpen" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display: none;"></path>
-                                </svg>
-                            </button>
-                            <h2 class="ml-3 text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight">{{ $title ?? 'Dashboard' }}</h2>
+                        <div class="lg:hidden sticky top-0 z-20 flex items-center justify-between px-4 sm:px-6 py-3 bg-white dark:bg-background-dark border-b border-gray-200 dark:border-[#324d67]">
+                            <div class="flex items-center">
+                                <button @click.prevent="sidebarOpen = !sidebarOpen" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 focus:outline-none focus:ring-2 focus:ring-primary">
+                                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                        <path x-show="!sidebarOpen" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" style="display: none;"></path>
+                                        <path x-show="sidebarOpen" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" style="display: none;"></path>
+                                    </svg>
+                                </button>
+                                <h2 class="ml-3 text-gray-900 dark:text-white text-base sm:text-lg font-bold leading-tight">{{ $title ?? 'Dashboard' }}</h2>
+                            </div>
+                            <a href="{{ route('notifications.index') }}" class="relative inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5" x-data="{ unreadCount: {{ auth()->user()->unreadNotifications()->count() }}, init() { setInterval(() => { fetch('{{ route('notifications.unread-count') }}').then(r => r.json()).then(d => this.unreadCount = d.count || 0).catch(() => {}); }, 30000); } }">
+                                <span class="material-symbols-outlined text-xl">notifications</span>
+                                <span x-show="unreadCount > 0" class="absolute -top-1 -right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-red-500 text-white text-[10px] font-bold" x-text="unreadCount > 99 ? '99+' : unreadCount" style="display: none;"></span>
+                            </a>
                         </div>
                     @endif
 

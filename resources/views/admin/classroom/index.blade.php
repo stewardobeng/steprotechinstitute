@@ -1,11 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Classroom Management</x-slot>
 
-    <!-- PageHeading -->
-    <div class="flex flex-wrap justify-between gap-3 items-center">
-        <h1 class="text-gray-900 dark:text-white text-2xl sm:text-3xl lg:text-4xl font-black leading-tight tracking-[-0.033em]">Classroom Management</h1>
-    </div>
-
     <div class="mt-4 sm:mt-8 grid gap-4 sm:gap-6">
         <!-- Classroom ID Settings Card -->
         <div class="flex flex-col rounded-xl border border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22] p-4 sm:p-6 overflow-hidden">
