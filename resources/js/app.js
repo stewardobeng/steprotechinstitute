@@ -8,10 +8,11 @@ window.Alpine = Alpine;
 function initTheme() {
     const darkMode = localStorage.getItem('darkMode');
     const html = document.documentElement;
-    if (darkMode === 'false') {
-        html.classList.remove('dark');
-    } else if (darkMode === 'true' || darkMode === null) {
+    if (darkMode === 'true') {
         html.classList.add('dark');
+    } else {
+        // Default to light theme (when darkMode is 'false' or null)
+        html.classList.remove('dark');
     }
 }
 

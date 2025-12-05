@@ -9,7 +9,23 @@
         @endphp
 
         <title>{{ $title ? $title . ' - ' : '' }}{{ $appName }}</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+        <link rel="apple-touch-icon" href="{{ asset('favicon.svg') }}">
+
+        <!-- Theme initialization - prevents flash of wrong theme -->
+        <script>
+            (function() {
+                const darkMode = localStorage.getItem('darkMode');
+                if (darkMode === 'true') {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    // Default to light theme
+                    document.documentElement.classList.remove('dark');
+                }
+            })();
+        </script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
