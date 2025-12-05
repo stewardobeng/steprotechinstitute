@@ -41,6 +41,18 @@ class CommissionService
                 'registration_id' => $registration->id,
             ]);
 
+            // Send notification to affiliate agent
+            try {
+                $notificationService = app(\App\Services\NotificationService::class);
+                $notificationService->notifyCommissionEarned($agent->user, $registration, self::COMMISSION_AMOUNT);
+            } catch (\Exception $e) {
+                Log::warning('Failed to send commission notification', [
+                    'agent_id' => $agent->id,
+                    'error' => $e->getMessage(),
+                ]);
+                // Don't fail commission processing if notification fails
+            }
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to process commission', [

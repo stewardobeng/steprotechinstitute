@@ -29,7 +29,13 @@ class NotificationController extends Controller
         
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([
-                'notifications' => $notifications,
+                'notifications' => [
+                    'data' => $notifications->items(),
+                    'current_page' => $notifications->currentPage(),
+                    'last_page' => $notifications->lastPage(),
+                    'per_page' => $notifications->perPage(),
+                    'total' => $notifications->total(),
+                ],
                 'unread_count' => $unreadCount,
             ]);
         }

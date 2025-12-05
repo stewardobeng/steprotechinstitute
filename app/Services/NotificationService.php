@@ -29,7 +29,7 @@ class NotificationService
     protected function createInAppNotification(User $user, string $type, string $title, string $message, array $data = []): void
     {
         try {
-            Notification::create([
+            $notification = Notification::create([
                 'user_id' => $user->id,
                 'type' => $type,
                 'title' => $title,
@@ -37,8 +37,18 @@ class NotificationService
                 'data' => $data,
                 'read' => false,
             ]);
+            
+            Log::info('In-app notification created', [
+                'notification_id' => $notification->id,
+                'user_id' => $user->id,
+                'type' => $type,
+            ]);
         } catch (\Exception $e) {
-            Log::error('Failed to create in-app notification: ' . $e->getMessage());
+            Log::error('Failed to create in-app notification: ' . $e->getMessage(), [
+                'user_id' => $user->id,
+                'type' => $type,
+                'error' => $e->getTraceAsString(),
+            ]);
         }
     }
 
@@ -179,7 +189,7 @@ class NotificationService
                 $affiliateAgent->user,
                 'student_referred',
                 'New Student Referred',
-                "Great news! A new student ({$student->name}) has been registered through your referral link.",
+                "Great news! A new student ({$student->name}) has been registered through your referral link. You will earn commission once they complete payment.",
                 ['student_id' => $student->id, 'action_url' => route('affiliate.students.index')]
             );
         }
@@ -191,10 +201,24 @@ class NotificationService
                 $admin,
                 'student_added',
                 'New Student Registered',
-                "A new student ({$student->name}) has been registered.",
+                "A new student ({$student->name}) has been registered." . ($affiliateAgent ? " Referred by: {$affiliateAgent->user->name}" : ""),
                 ['student_id' => $student->id, 'action_url' => route('admin.students.index')]
             );
         }
+    }
+
+    /**
+     * Notify affiliate agent when commission is earned
+     */
+    public function notifyCommissionEarned(User $affiliateAgent, $registration, $commissionAmount): void
+    {
+        $this->send(
+            $affiliateAgent,
+            'commission_earned',
+            'Commission Earned',
+            "Congratulations! You've earned GHS {$commissionAmount} commission from student {$registration->user->name} completing their payment.",
+            ['registration_id' => $registration->id, 'commission_amount' => $commissionAmount, 'action_url' => route('affiliate.students.index')]
+        );
     }
 
     /**

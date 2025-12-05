@@ -202,7 +202,7 @@ class PaymentService
                 }
             });
 
-            // Send notifications after successful payment
+            // Send notifications after successful payment (outside transaction)
             try {
                 $notificationService = app(\App\Services\NotificationService::class);
                 $payment = \App\Models\Payment::where('paystack_reference', $reference)->first();
@@ -210,11 +210,27 @@ class PaymentService
                 if ($payment) {
                     // Notify student about payment completion
                     $notificationService->notifyPaymentCompleted($registration->user, $payment);
+                    
+                    // Notify admin about payment completion
+                    $admins = \App\Models\User::where('role', 'admin')->get();
+                    foreach ($admins as $admin) {
+                        $notificationService->send(
+                            $admin,
+                            'payment_completed',
+                            'Payment Received',
+                            "Student {$registration->user->name} has completed payment of GHS {$payment->amount}.",
+                            ['payment_id' => $payment->id, 'student_id' => $registration->student_id, 'action_url' => route('admin.students.index')]
+                        );
+                    }
+                    
+                    // Commission notification is already sent by CommissionService
+                    // Affiliate agent will be notified when commission is processed
                 }
             } catch (\Exception $e) {
                 Log::warning('Failed to send notifications after payment', [
                     'registration_id' => $registration->id,
                     'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
                 ]);
                 // Don't fail the payment if notification fails
             }
