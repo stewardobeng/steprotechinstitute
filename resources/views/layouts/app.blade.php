@@ -63,20 +63,30 @@
                     // If switching from mobile to desktop, open sidebar
                     if (wasMobile && !this.isMobile) {
                         this.sidebarOpen = true;
+                        document.body.style.overflow = '';
                     }
                     // If switching from desktop to mobile, close sidebar
                     else if (!wasMobile && this.isMobile) {
                         this.sidebarOpen = false;
+                        document.body.style.overflow = '';
                     }
                 };
                 
                 window.addEventListener('resize', handleResize);
                 
-                // Cleanup on component destroy
+                // Prevent body scroll when sidebar is open on mobile
                 this.$watch('sidebarOpen', (value) => {
                     // Prevent sidebar from closing on desktop
                     if (!this.isMobile && !value) {
                         this.sidebarOpen = true;
+                    }
+                    // Prevent body scroll when sidebar is open on mobile
+                    if (this.isMobile) {
+                        if (value) {
+                            document.body.style.overflow = 'hidden';
+                        } else {
+                            document.body.style.overflow = '';
+                        }
                     }
                 });
             }
@@ -99,7 +109,7 @@
                     'translate-x-0': sidebarOpen || !isMobile,
                     '-translate-x-full': !sidebarOpen && isMobile
                 }"
-                       class="fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0">
+                       class="fixed left-0 top-0 h-screen w-64 flex flex-col border-r {{ $isAdmin ? 'border-gray-200 dark:border-border-dark bg-white dark:bg-surface-dark/30' : 'border-gray-200 dark:border-[#324d67] bg-white dark:bg-[#111a22]' }} p-4 z-40 overflow-y-auto transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky">
                     <div class="flex flex-col gap-4">
                         <!-- App Name Header -->
                         <div class="flex items-center gap-3 py-3 border-b {{ $isAdmin ? 'border-gray-200 dark:border-border-dark' : 'border-gray-200 dark:border-[#324d67]' }}">
@@ -169,7 +179,7 @@
                                     <span class="material-symbols-outlined {{ request()->routeIs('notifications.*') ? ($isAdmin ? 'text-primary dark:text-white' : 'text-primary dark:text-white') : ($isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white') }}">notifications</span>
                                     <p class="{{ request()->routeIs('notifications.*') ? ($isAdmin ? 'text-primary dark:text-white' : 'text-primary dark:text-white') : ($isAdmin ? 'text-gray-700 dark:text-white' : 'text-gray-600 dark:text-white') }} text-sm font-medium leading-normal">Notifications</p>
                                     @if(auth()->user()->unreadNotifications()->count() > 0)
-                                        <span class="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-primary text-white text-xs font-bold">{{ auth()->user()->unreadNotifications()->count() }}</span>
+                                        <span class="flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full bg-red-500 text-white text-xs font-bold">{{ auth()->user()->unreadNotifications()->count() }}</span>
                                     @endif
                                 </a>
                                 <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('profile.edit') ? ($isAdmin ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'bg-primary/10 dark:bg-[#233648]') : ($isAdmin ? 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' : 'hover:bg-gray-100 dark:hover:bg-gray-800') }}" href="{{ route('profile.edit') }}" @click="if (isMobile) { sidebarOpen = false; }">

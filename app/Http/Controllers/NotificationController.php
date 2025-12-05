@@ -27,7 +27,7 @@ class NotificationController extends Controller
         // Get notifications
         $notifications = $query->paginate(20);
         
-        if ($request->expectsJson() || $request->ajax()) {
+        if ($request->expectsJson() || $request->ajax() || $request->wantsJson()) {
             return response()->json([
                 'notifications' => [
                     'data' => $notifications->items(),

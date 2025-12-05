@@ -22,7 +22,7 @@
             </div>
 
             <!-- Notifications List -->
-            <div class="space-y-3" x-data="notificationData()" x-init="fetchNotifications()">
+            <div class="space-y-3" x-data="notificationData()" x-init="init()">
                 <template x-if="loading">
                     <div class="text-center py-8 text-gray-500 dark:text-gray-400">
                         <span class="material-symbols-outlined animate-spin text-4xl">refresh</span>
@@ -39,23 +39,23 @@
 
                 <template x-for="notification in notifications" :key="notification.id">
                     <div 
-                        @click="markAsRead(notification.id); if (notification.data?.action_url) window.location.href = notification.data.action_url;"
-                        :class="notification.read ? 'bg-gray-50 dark:bg-gray-800/30' : 'bg-white dark:bg-[#111a22] border-l-4 border-primary'"
+                        @click="handleNotificationClick(notification)"
+                        :class="notification.read ? 'bg-gray-50 dark:bg-gray-800/30 opacity-75' : 'bg-white dark:bg-[#111a22] border-l-4 border-primary'"
                         class="p-4 rounded-lg border border-gray-200 dark:border-[#324d67] cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition"
                     >
                         <div class="flex items-start gap-4">
                             <div class="flex-shrink-0 mt-1">
-                                <span class="material-symbols-outlined text-primary text-2xl" x-text="getNotificationIcon(notification.type)" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;"></span>
+                                <span class="material-symbols-outlined text-2xl" :class="notification.read ? 'text-gray-400 dark:text-gray-600' : 'text-primary'" x-text="getNotificationIcon(notification.type)" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;"></span>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-start justify-between gap-2">
                                     <div class="flex-1">
-                                        <h3 class="text-gray-900 dark:text-white font-semibold text-base" x-text="notification.title"></h3>
-                                        <p class="text-gray-600 dark:text-gray-400 text-sm mt-1 whitespace-pre-line" x-text="notification.message"></p>
+                                        <h3 class="font-semibold text-base" :class="notification.read ? 'text-gray-500 dark:text-gray-500' : 'text-gray-900 dark:text-white'" x-text="notification.title"></h3>
+                                        <p class="text-sm mt-1 whitespace-pre-line" :class="notification.read ? 'text-gray-400 dark:text-gray-600' : 'text-gray-600 dark:text-gray-400'" x-text="notification.message"></p>
                                         <p class="text-gray-500 dark:text-gray-500 text-xs mt-2" x-text="formatDate(notification.created_at)"></p>
                                     </div>
                                     <div x-show="!notification.read" class="flex-shrink-0">
-                                        <div class="w-2 h-2 rounded-full bg-primary"></div>
+                                        <div class="w-2 h-2 rounded-full bg-red-500"></div>
                                     </div>
                                 </div>
                             </div>
@@ -90,16 +90,29 @@
     <script>
         function notificationData() {
             return {
-                notifications: [],
-                loading: true,
+                notifications: @json($notifications->items()),
+                loading: false,
                 unreadCount: {{ $unreadCount }},
-                currentPage: 1,
-                lastPage: 1,
+                currentPage: {{ $notifications->currentPage() }},
+                lastPage: {{ $notifications->lastPage() }},
+                
+                init() {
+                    // Notifications are already loaded from server
+                    this.loading = false;
+                },
                 
                 async fetchNotifications(page = 1) {
                     this.loading = true;
                     try {
-                        const response = await fetch(`{{ route('notifications.index') }}?page=${page}`);
+                        const response = await fetch(`{{ route('notifications.index') }}?page=${page}`, {
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                            }
+                        });
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
                         const data = await response.json();
                         this.notifications = data.notifications?.data || [];
                         this.currentPage = data.notifications?.current_page || 1;
@@ -113,6 +126,14 @@
                 },
                 
                 async markAsRead(notificationId) {
+                    // Find the notification in the array and mark it as read immediately (optimistic update)
+                    const notification = this.notifications.find(n => n.id === notificationId);
+                    if (notification && !notification.read) {
+                        notification.read = true;
+                        notification.read_at = new Date().toISOString();
+                        this.unreadCount = Math.max(0, this.unreadCount - 1);
+                    }
+                    
                     try {
                         await fetch(`{{ url('/notifications') }}/${notificationId}/read`, {
                             method: 'POST',
@@ -121,9 +142,30 @@
                                 'Content-Type': 'application/json',
                             },
                         });
+                        // Refresh to ensure sync with server
                         this.fetchNotifications(this.currentPage);
                     } catch (error) {
                         console.error('Failed to mark notification as read:', error);
+                        // Revert optimistic update on error
+                        if (notification) {
+                            notification.read = false;
+                            this.unreadCount += 1;
+                        }
+                    }
+                },
+                
+                async handleNotificationClick(notification) {
+                    // Mark as read first
+                    if (!notification.read) {
+                        await this.markAsRead(notification.id);
+                    }
+                    
+                    // Then redirect if action URL exists
+                    if (notification.data && notification.data.action_url) {
+                        // Small delay to ensure UI updates
+                        setTimeout(() => {
+                            window.location.href = notification.data.action_url;
+                        }, 100);
                     }
                 },
                 

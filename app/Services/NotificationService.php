@@ -165,7 +165,7 @@ class NotificationService
             'withdrawal_approved',
             'Withdrawal Approved',
             "Hello {$user->name},\n\nYour withdrawal request of GHS {$withdrawal->amount} has been approved and will be processed shortly.\n\nThank you!",
-            ['withdrawal_id' => $withdrawal->id, 'amount' => $withdrawal->amount]
+            ['withdrawal_id' => $withdrawal->id, 'amount' => $withdrawal->amount, 'action_url' => route('affiliate.withdrawals.index')]
         );
     }
 
@@ -226,12 +226,13 @@ class NotificationService
      */
     public function notifyPaymentCompleted(User $user, $payment): void
     {
+        $actionUrl = $user->isStudent() ? route('student.dashboard') : ($user->isAdmin() ? route('admin.dashboard') : route('affiliate.dashboard'));
         $this->send(
             $user,
             'payment_completed',
             'Payment Received',
             "Hello {$user->name},\n\nYour payment of GHS {$payment->amount} has been received and confirmed.\n\nThank you for your payment!",
-            ['payment_id' => $payment->id, 'amount' => $payment->amount]
+            ['payment_id' => $payment->id, 'amount' => $payment->amount, 'action_url' => $actionUrl]
         );
     }
 }
