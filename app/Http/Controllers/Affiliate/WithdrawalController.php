@@ -39,12 +39,16 @@ class WithdrawalController extends Controller
             ]);
         }
 
-        Withdrawal::create([
+        $withdrawal = Withdrawal::create([
             'affiliate_agent_id' => $agent->id,
             'amount' => $validated['amount'],
             'status' => 'pending',
             'requested_at' => now(),
         ]);
+
+        // Send notification to admin
+        $notificationService = new \App\Services\NotificationService();
+        $notificationService->notifyWithdrawalRequested($withdrawal);
 
         return redirect()->route('affiliate.withdrawals.index')
             ->with('success', 'Withdrawal request submitted successfully.');

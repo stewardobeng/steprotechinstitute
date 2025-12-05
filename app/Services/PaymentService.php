@@ -202,6 +202,23 @@ class PaymentService
                 }
             });
 
+            // Send notifications after successful payment
+            try {
+                $notificationService = app(\App\Services\NotificationService::class);
+                $payment = \App\Models\Payment::where('paystack_reference', $reference)->first();
+                
+                if ($payment) {
+                    // Notify student about payment completion
+                    $notificationService->notifyPaymentCompleted($registration->user, $payment);
+                }
+            } catch (\Exception $e) {
+                Log::warning('Failed to send notifications after payment', [
+                    'registration_id' => $registration->id,
+                    'error' => $e->getMessage(),
+                ]);
+                // Don't fail the payment if notification fails
+            }
+
             return true;
         } catch (\Exception $e) {
             Log::error('Failed to process payment', [

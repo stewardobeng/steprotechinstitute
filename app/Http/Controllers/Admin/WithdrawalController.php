@@ -43,6 +43,10 @@ class WithdrawalController extends Controller
             'approved_at' => now(),
         ]);
 
+        // Send notification to affiliate agent
+        $notificationService = new \App\Services\NotificationService();
+        $notificationService->notifyWithdrawalApproved($withdrawal->affiliateAgent->user, $withdrawal);
+
         return redirect()->route('admin.withdrawals.index')
             ->with('success', 'Withdrawal approved successfully.');
     }

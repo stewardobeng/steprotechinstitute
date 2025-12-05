@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController
 use App\Http\Controllers\Admin\SettingsController as AdminSettingsController;
 use App\Http\Controllers\Admin\ClassroomController as AdminClassroomController;
 use App\Http\Controllers\Student\ClassroomController as StudentClassroomController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -39,6 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/2fa/enable', [ProfileController::class, 'enable2FA'])->name('profile.2fa.enable');
     Route::delete('/profile/2fa/disable', [ProfileController::class, 'disable2FA'])->name('profile.2fa.disable');
     Route::post('/profile/2fa/regenerate-codes', [ProfileController::class, 'regenerateBackupCodes'])->name('profile.2fa.regenerate-codes');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/unread-count', [NotificationController::class, 'unreadCount'])->name('notifications.unread-count');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
 
     // Student Routes
     Route::prefix('student')->name('student.')->middleware('role:student')->group(function () {

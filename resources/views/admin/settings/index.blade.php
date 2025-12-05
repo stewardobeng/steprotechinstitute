@@ -118,6 +118,64 @@
                                         <input type="hidden" name="settings[0][4][type]" value="integer">
                                     </div>
                                 </div>
+                            @elseif($group === 'smtp')
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_enabled" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Enable SMTP</label>
+                                        <select id="smtp_enabled" name="settings[1][0][value]" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                            <option value="1" {{ \App\Models\Setting::getValue('smtp_enabled', false) ? 'selected' : '' }}>Yes</option>
+                                            <option value="0" {{ !\App\Models\Setting::getValue('smtp_enabled', false) ? 'selected' : '' }}>No</option>
+                                        </select>
+                                        <input type="hidden" name="settings[1][0][key]" value="smtp_enabled">
+                                        <input type="hidden" name="settings[1][0][type]" value="boolean">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_host" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">SMTP Host</label>
+                                        <input type="text" id="smtp_host" name="settings[1][1][value]" value="{{ \App\Models\Setting::getValue('smtp_host', env('MAIL_HOST', 'smtp.mailtrap.io')) }}" placeholder="smtp.mailtrap.io" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][1][key]" value="smtp_host">
+                                        <input type="hidden" name="settings[1][1][type]" value="string">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_port" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">SMTP Port</label>
+                                        <input type="number" id="smtp_port" name="settings[1][2][value]" value="{{ \App\Models\Setting::getValue('smtp_port', env('MAIL_PORT', 2525)) }}" placeholder="2525" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][2][key]" value="smtp_port">
+                                        <input type="hidden" name="settings[1][2][type]" value="integer">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_encryption" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">Encryption</label>
+                                        <select id="smtp_encryption" name="settings[1][3][value]" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                            <option value="tls" {{ \App\Models\Setting::getValue('smtp_encryption', env('MAIL_ENCRYPTION', 'tls')) === 'tls' ? 'selected' : '' }}>TLS</option>
+                                            <option value="ssl" {{ \App\Models\Setting::getValue('smtp_encryption', env('MAIL_ENCRYPTION', 'tls')) === 'ssl' ? 'selected' : '' }}>SSL</option>
+                                            <option value="" {{ empty(\App\Models\Setting::getValue('smtp_encryption', env('MAIL_ENCRYPTION', 'tls'))) ? 'selected' : '' }}>None</option>
+                                        </select>
+                                        <input type="hidden" name="settings[1][3][key]" value="smtp_encryption">
+                                        <input type="hidden" name="settings[1][3][type]" value="string">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_username" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">SMTP Username</label>
+                                        <input type="text" id="smtp_username" name="settings[1][4][value]" value="{{ \App\Models\Setting::getValue('smtp_username', env('MAIL_USERNAME')) }}" placeholder="your-username" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][4][key]" value="smtp_username">
+                                        <input type="hidden" name="settings[1][4][type]" value="string">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_password" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">SMTP Password</label>
+                                        <input type="password" id="smtp_password" name="settings[1][5][value]" value="{{ \App\Models\Setting::getValue('smtp_password', env('MAIL_PASSWORD')) }}" placeholder="your-password" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][5][key]" value="smtp_password">
+                                        <input type="hidden" name="settings[1][5][type]" value="string">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_from_address" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">From Email Address</label>
+                                        <input type="email" id="smtp_from_address" name="settings[1][6][value]" value="{{ \App\Models\Setting::getValue('smtp_from_address', env('MAIL_FROM_ADDRESS', 'noreply@example.com')) }}" placeholder="noreply@example.com" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][6][key]" value="smtp_from_address">
+                                        <input type="hidden" name="settings[1][6][type]" value="string">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="smtp_from_name" class="text-gray-700 dark:text-gray-300 text-sm font-medium leading-normal">From Name</label>
+                                        <input type="text" id="smtp_from_name" name="settings[1][7][value]" value="{{ \App\Models\Setting::getValue('smtp_from_name', env('MAIL_FROM_NAME', 'StepProClass')) }}" placeholder="StepProClass" class="w-full rounded-lg border border-gray-300 dark:border-[#324d67] bg-white dark:bg-[#111a22] text-gray-900 dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent h-10 px-4 text-base font-normal leading-normal">
+                                        <input type="hidden" name="settings[1][7][key]" value="smtp_from_name">
+                                        <input type="hidden" name="settings[1][7][type]" value="string">
+                                    </div>
+                                </div>
                             @elseif($group === 'general')
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div class="flex flex-col gap-2">

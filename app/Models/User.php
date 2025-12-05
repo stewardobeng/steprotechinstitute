@@ -99,4 +99,20 @@ class User extends Authenticatable
     {
         return $this->hasOne(\App\Models\TwoFactorAuthentication::class);
     }
+
+    /**
+     * Get the user's notifications
+     */
+    public function notifications()
+    {
+        return $this->hasMany(\App\Models\Notification::class);
+    }
+
+    /**
+     * Get unread notifications
+     */
+    public function unreadNotifications()
+    {
+        return $this->notifications()->where('read', false);
+    }
 }

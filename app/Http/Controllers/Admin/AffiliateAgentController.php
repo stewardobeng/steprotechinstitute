@@ -70,6 +70,10 @@ class AffiliateAgentController extends Controller
             'approved_at' => now(),
         ]);
 
+        // Send notification to affiliate agent
+        $notificationService = new \App\Services\NotificationService();
+        $notificationService->notifyAffiliateApproved($affiliateAgent->user);
+
         return redirect()->route('admin.affiliate-agents.index')
             ->with('success', 'Affiliate agent approved successfully.');
     }

@@ -124,6 +124,18 @@ class RegistrationController extends Controller
                     'payment_status' => 'pending',
                 ]);
 
+                // Send notification when student is registered
+                try {
+                    $affiliateAgent = $affiliateAgentId ? \App\Models\AffiliateAgent::find($affiliateAgentId) : null;
+                    $notificationService = app(\App\Services\NotificationService::class);
+                    $notificationService->notifyStudentAdded($user, $affiliateAgent);
+                } catch (\Exception $e) {
+                    \Log::warning('Failed to send student registration notification', [
+                        'user_id' => $user->id,
+                        'error' => $e->getMessage(),
+                    ]);
+                }
+
                 return $registration;
             });
 

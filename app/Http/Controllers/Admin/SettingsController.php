@@ -26,6 +26,16 @@ class SettingsController extends Controller
             'whatsapp_number',
             'app_name',
             'classroom_id',
+            // SMTP settings
+            'smtp_enabled',
+            'smtp_mailer',
+            'smtp_host',
+            'smtp_port',
+            'smtp_username',
+            'smtp_password',
+            'smtp_encryption',
+            'smtp_from_address',
+            'smtp_from_name',
         ];
 
         $settingsData = $request->input('settings', []);
