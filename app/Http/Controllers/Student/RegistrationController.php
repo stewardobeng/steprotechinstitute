@@ -142,24 +142,50 @@ class RegistrationController extends Controller
                 ]);
             }
 
-            // Initialize payment outside transaction
-            $paymentService = app(PaymentService::class);
-            $paymentResult = $paymentService->initializePayment($user, [
-                'email' => $validated['email'],
-                'name' => $validated['name'],
-            ]);
+            // Log the user in automatically after registration
+            auth()->login($user);
 
-            if ($paymentResult['success']) {
-                return redirect($paymentResult['authorization_url']);
-            }
-
-            return back()->withErrors([
-                'payment' => 'Failed to initialize payment. Please try again.',
-            ])->withInput();
+            // Redirect to payment page that will show popup
+            return redirect()->route('register.payment', ['registration' => $registration->id])
+                ->with('success', 'Registration successful! Please complete your payment.');
         } catch (\Exception $e) {
             return back()->withErrors([
                 'error' => 'Registration failed. Please try again.',
             ])->withInput();
         }
+    }
+
+    public function payment(StudentRegistration $registration)
+    {
+        // Ensure the registration belongs to the authenticated user
+        if ($registration->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized access to this registration.');
+        }
+
+        // If already paid, redirect to dashboard
+        if ($registration->payment_status === 'paid') {
+            return redirect()->route('student.dashboard')
+                ->with('success', 'Payment already completed!');
+        }
+
+        // Initialize payment
+        $paymentService = app(PaymentService::class);
+        $paymentResult = $paymentService->initializePayment($registration, [
+            'email' => $registration->user->email,
+            'name' => $registration->user->name,
+        ]);
+
+        if (!$paymentResult['success']) {
+            return redirect()->route('student.dashboard')
+                ->with('error', $paymentResult['message'] ?? 'Failed to initialize payment. Please try again.');
+        }
+
+        return view('student.payment', [
+            'registration' => $registration,
+            'paymentReference' => $paymentResult['reference'],
+            'publicKey' => $paymentService->getPublicKey(),
+            'amount' => $registration->registration_fee * 100, // Amount in kobo
+            'email' => $registration->user->email,
+        ]);
     }
 }

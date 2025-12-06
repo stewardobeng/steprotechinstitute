@@ -45,13 +45,12 @@ class DashboardController extends Controller
                 'total_earnings' => $agent->total_earnings,
                 'total_withdrawn' => $agent->total_withdrawn,
                 'wallet_balance' => $agent->wallet_balance,
-                'total_students' => $agent->studentRegistrations()->where('payment_status', 'paid')->count(),
+                'total_students' => $agent->studentRegistrations()->count(),
                 'pending_withdrawals' => $agent->withdrawals()->where('status', 'pending')->count(),
             ];
 
             $recentStudents = $agent->studentRegistrations()
                 ->with('user')
-                ->where('payment_status', 'paid')
                 ->latest()
                 ->limit(10)
                 ->get();

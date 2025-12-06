@@ -179,7 +179,7 @@
                                         <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-xl">info</span>
                                         <div>
                                             <p class="text-blue-800 dark:text-blue-300 font-semibold text-sm">Registration Fee</p>
-                                            <p class="text-blue-700 dark:text-blue-400 text-sm">You will be redirected to PayStack to complete payment of ₵150.00 after registration.</p>
+                                            <p class="text-blue-700 dark:text-blue-400 text-sm">A payment popup will open after registration to complete payment of ₵150.00.</p>
                                         </div>
                                     </div>
                                 </div>

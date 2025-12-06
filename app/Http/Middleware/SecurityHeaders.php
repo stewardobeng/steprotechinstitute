@@ -25,14 +25,14 @@ class SecurityHeaders
         $response->headers->set('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
         
         // Content Security Policy
-        // Allow Chart.js from cdn.jsdelivr.net, PayStack scripts, Google Fonts, Cloudflare Insights
+        // Allow Chart.js from cdn.jsdelivr.net, PayStack scripts, Google Fonts, Cloudflare Insights, Rybbit Analytics
         $csp = implode('; ', [
             "default-src 'self'",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.paystack.co https://cdn.jsdelivr.net https://static.cloudflareinsights.com",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.paystack.co https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://app.rybbit.io",
             "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://paystack.com",
             "font-src 'self' https://fonts.gstatic.com",
             "img-src 'self' data: https:",
-            "connect-src 'self' https://api.paystack.co",
+            "connect-src 'self' https://api.paystack.co https://app.rybbit.io",
             "frame-src https://js.paystack.co https://checkout.paystack.com",
         ]);
         $response->headers->set('Content-Security-Policy', $csp);

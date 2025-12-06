@@ -17,7 +17,6 @@ class StudentController extends Controller
 
         $students = $agent->studentRegistrations()
             ->with('user')
-            ->where('payment_status', 'paid')
             ->latest()
             ->paginate(20);
 

@@ -26,6 +26,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 // Student Registration (Public)
 Route::get('/register', [StudentRegistrationController::class, 'show'])->name('register');
 Route::post('/register', [StudentRegistrationController::class, 'store'])->name('register.store');
+Route::get('/register/payment/{registration}', [StudentRegistrationController::class, 'payment'])->name('register.payment')->middleware('auth');
 
 // Payment Routes
 Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');

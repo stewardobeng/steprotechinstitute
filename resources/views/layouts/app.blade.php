@@ -366,5 +366,12 @@
                 </div>
             </div>
         </div>
+
+        <!-- Rybbit Analytics -->
+        <script
+            src="https://app.rybbit.io/api/script.js"
+            data-site-id="2239bf4300e7"
+            defer
+        ></script>
     </body>
 </html>

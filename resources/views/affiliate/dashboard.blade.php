@@ -102,8 +102,8 @@
                                     <p class="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{{ $student->payment_date ? $student->payment_date->format('Y-m-d') : $student->created_at->format('Y-m-d') }}</p>
                                 </td>
                                 <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap">
-                                    <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : 'bg-orange-100 dark:bg-orange-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' }}">
-                                        {{ $student->payment_status === 'paid' ? 'Paid' : 'Unpaid' }}
+                                    <span class="inline-flex items-center rounded-full {{ $student->payment_status === 'paid' ? 'bg-green-100 dark:bg-green-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-green-800 dark:text-green-400' : ($student->payment_status === 'pending' ? 'bg-orange-100 dark:bg-orange-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-orange-800 dark:text-orange-400' : 'bg-red-100 dark:bg-red-900/30 px-2 sm:px-2.5 py-0.5 text-xs font-medium text-red-800 dark:text-red-400') }}">
+                                        {{ ucfirst($student->payment_status) }}
                                     </span>
                                 </td>
                                 <td class="px-3 sm:px-5 py-3 sm:py-4 whitespace-nowrap text-right">
