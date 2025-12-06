@@ -119,6 +119,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/classroom', [AdminClassroomController::class, 'index'])->name('classroom.index');
         Route::post('/classroom/update-id', [AdminClassroomController::class, 'updateClassroomId'])->name('classroom.update-id');
         Route::post('/classroom/students/{student}/toggle-approval', [AdminClassroomController::class, 'toggleStudentApproval'])->name('classroom.students.toggle-approval');
+        
+        // Messages
+        Route::get('/messages', [\App\Http\Controllers\Admin\MessageController::class, 'index'])->name('messages.index');
+        Route::post('/messages/send', [\App\Http\Controllers\Admin\MessageController::class, 'send'])->name('messages.send');
+        
+        // Message Templates
+        Route::get('/message-templates', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'index'])->name('message-templates.index');
+        Route::get('/message-templates/create', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'create'])->name('message-templates.create');
+        Route::post('/message-templates', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'store'])->name('message-templates.store');
+        Route::get('/message-templates/{messageTemplate}/edit', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'edit'])->name('message-templates.edit');
+        Route::put('/message-templates/{messageTemplate}', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'update'])->name('message-templates.update');
+        Route::delete('/message-templates/{messageTemplate}', [\App\Http\Controllers\Admin\MessageTemplateController::class, 'destroy'])->name('message-templates.destroy');
     });
 });
 

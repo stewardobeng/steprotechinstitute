@@ -14,13 +14,23 @@ class NotificationService
     /**
      * Send notification (both email and in-app)
      */
-    public function send(User $user, string $type, string $title, string $message, array $data = []): void
+    public function send(User $user, string $type, string $title, string $message, array $data = [], bool $skipEmail = false): void
     {
         // Create in-app notification
         $this->createInAppNotification($user, $type, $title, $message, $data);
 
-        // Send email notification
-        $this->sendEmailNotification($user, $type, $title, $message, $data);
+        // Send email notification (unless skipped)
+        if (!$skipEmail) {
+            $this->sendEmailNotification($user, $type, $title, $message, $data);
+        }
+    }
+
+    /**
+     * Send in-app notification only (no email)
+     */
+    public function sendNotificationOnly(User $user, string $type, string $title, string $message, array $data = []): void
+    {
+        $this->createInAppNotification($user, $type, $title, $message, $data);
     }
 
     /**
@@ -72,7 +82,7 @@ class NotificationService
                 return;
             }
 
-            // Send email
+            // Send email using the mailer instance
             Mail::raw($message, function ($mail) use ($user, $title, $type) {
                 $mail->to($user->email, $user->name)
                     ->subject($title);
@@ -84,9 +94,12 @@ class NotificationService
                 'email' => $user->email,
             ]);
         } catch (\Exception $e) {
-            Log::error('Failed to send email notification: ' . $e->getMessage(), [
+            Log::error('Failed to send email notification', [
                 'user_id' => $user->id,
                 'type' => $type,
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             ]);
         }
     }
@@ -96,31 +109,51 @@ class NotificationService
      */
     protected function updateMailConfig(): void
     {
-        $mailer = Setting::getValue('smtp_mailer', env('MAIL_MAILER', 'smtp'));
-        $host = Setting::getValue('smtp_host', env('MAIL_HOST', 'smtp.mailtrap.io'));
-        $port = Setting::getValue('smtp_port', env('MAIL_PORT', 2525));
-        $username = Setting::getValue('smtp_username', env('MAIL_USERNAME'));
-        $password = Setting::getValue('smtp_password', env('MAIL_PASSWORD'));
-        $encryption = Setting::getValue('smtp_encryption', env('MAIL_ENCRYPTION', 'tls'));
-        $fromAddress = Setting::getValue('smtp_from_address', env('MAIL_FROM_ADDRESS', 'noreply@example.com'));
-        $fromName = Setting::getValue('smtp_from_name', env('MAIL_FROM_NAME', 'StepProClass'));
+        try {
+            // Check if SMTP is enabled
+            $smtpEnabled = Setting::getValue('smtp_enabled', false);
+            $smtpEnabled = filter_var($smtpEnabled, FILTER_VALIDATE_BOOLEAN);
+            
+            if (!$smtpEnabled) {
+                // If SMTP is disabled, use log driver
+                Config::set('mail.default', 'log');
+                // Reset mailer instance to pick up new settings
+                app()->forgetInstance('mailer');
+                return;
+            }
 
-        Config::set('mail.default', $mailer);
-        Config::set('mail.mailers.smtp', [
-            'transport' => 'smtp',
-            'host' => $host,
-            'port' => $port,
-            'encryption' => $encryption ?: null,
-            'username' => $username,
-            'password' => $password,
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
-        ]);
+            $mailHost = Setting::getValue('smtp_host', env('MAIL_HOST', '127.0.0.1'));
+            $mailPort = Setting::getValue('smtp_port', env('MAIL_PORT', 2525));
+            $mailUsername = Setting::getValue('smtp_username', env('MAIL_USERNAME'));
+            $mailPassword = Setting::getValue('smtp_password', env('MAIL_PASSWORD'));
+            $mailEncryption = Setting::getValue('smtp_encryption', env('MAIL_ENCRYPTION', 'tls'));
+            $mailFromAddress = Setting::getValue('smtp_from_address', env('MAIL_FROM_ADDRESS', 'noreply@example.com'));
+            $mailFromName = Setting::getValue('smtp_from_name', env('MAIL_FROM_NAME', 'StepProClass'));
 
-        Config::set('mail.from', [
-            'address' => $fromAddress,
-            'name' => $fromName,
-        ]);
+            Config::set('mail.default', 'smtp');
+            Config::set('mail.mailers.smtp', [
+                'transport' => 'smtp',
+                'host' => $mailHost,
+                'port' => (int) $mailPort,
+                'encryption' => $mailEncryption ?: null,
+                'username' => $mailUsername,
+                'password' => $mailPassword,
+                'timeout' => null,
+                'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            ]);
+
+            Config::set('mail.from', [
+                'address' => $mailFromAddress,
+                'name' => $mailFromName,
+            ]);
+
+            // Reconfigure the mailer to pick up new settings
+            app()->forgetInstance('mailer');
+        } catch (\Exception $e) {
+            Log::error('Failed to update mail config in NotificationService', [
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**

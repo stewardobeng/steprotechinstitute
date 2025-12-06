@@ -145,6 +145,14 @@
                                     <span class="material-symbols-outlined">class</span>
                                     <p class="text-sm font-medium leading-normal">Classroom</p>
                                 </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.messages.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.messages.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                    <span class="material-symbols-outlined">mail</span>
+                                    <p class="text-sm font-medium leading-normal">Messages</p>
+                                </a>
+                                <a class="flex items-center gap-3 px-3 py-2 rounded-lg {{ request()->routeIs('admin.message-templates.*') ? 'bg-primary/10 dark:bg-primary/20 text-primary' : 'text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-white/5' }}" href="{{ route('admin.message-templates.index') }}" @click="if (isMobile) { sidebarOpen = false; }">
+                                    <span class="material-symbols-outlined">description</span>
+                                    <p class="text-sm font-medium leading-normal">Templates</p>
+                                </a>
                             @elseif($isAffiliate)
                                 @php
                                     $affiliateAgent = $user->affiliateAgent;
